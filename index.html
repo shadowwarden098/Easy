@@ -685,9 +685,9 @@ h1 {
 
       <div class="extras">
         <label class="check-label">
-          <input type="checkbox"> Recordarme
+          <input type="checkbox" id="rememberMe"> Recordarme
         </label>
-        <a class="forgot" href="#">¿Olvidaste tu contraseña?</a>
+        <a class="forgot" href="#" id="forgotLink">¿Olvidaste tu contraseña?</a>
       </div>
 
       <button class="btn-main" id="loginBtn">Entrar →</button>
@@ -1055,6 +1055,8 @@ const togglePwBtn = document.getElementById('togglePw');
 const loginBtn = document.getElementById('loginBtn');
 const registerLink = document.getElementById('registerLink');
 const btnGoogle = document.getElementById('btnGoogle');
+const forgotLink = document.getElementById('forgotLink');
+const rememberMe = document.getElementById('rememberMe');
 const errorMsg = document.getElementById('errorMsg');
 
 // Email focus
@@ -1098,14 +1100,59 @@ togglePwBtn.addEventListener('click', (e) => {
 });
 
 // ══════════════════════════════════════════
+// PASSWORD STRENGTH INDICATOR
+// ══════════════════════════════════════════
+pwInput.addEventListener('input', () => {
+  const strength = calculatePasswordStrength(pwInput.value);
+  updatePasswordStrength(strength);
+});
+
+function calculatePasswordStrength(password) {
+  let score = 0;
+  if (password.length >= 6) score++;
+  if (password.length >= 12) score++;
+  if (/[a-z]/.test(password)) score++;
+  if (/[A-Z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
+  if (/[^a-zA-Z0-9]/.test(password)) score++;
+  return Math.min(score, 4);
+}
+
+function updatePasswordStrength(strength) {
+  const bar = document.getElementById('pwStrengthBar');
+  const fill = document.getElementById('pwStrengthFill');
+  
+  if (pwInput.value.length > 0) {
+    bar.style.display = 'block';
+  } else {
+    bar.style.display = 'none';
+    return;
+  }
+  
+  const percentages = [25, 50, 75, 100];
+  const colors = ['#ef233c', '#ffd166', '#06d6a0', '#06d6a0'];
+  
+  fill.style.width = percentages[strength] + '%';
+  fill.style.background = colors[strength];
+}
+
+// ══════════════════════════════════════════
 // LOGIN HANDLER
 // ══════════════════════════════════════════
 loginBtn.addEventListener('click', async () => {
   const email = emailInput.value.trim();
   const password = pwInput.value.trim();
   
+  errorMsg.style.display = 'none';
+  
   if (!email || !password) {
-    errorMsg.style.display = 'block';
+    showError('Por favor completa todos los campos');
+    applyState('disgust');
+    return;
+  }
+  
+  if (!isValidEmail(email)) {
+    showError('Por favor ingresa un correo válido');
     applyState('disgust');
     return;
   }
@@ -1125,19 +1172,45 @@ loginBtn.addEventListener('click', async () => {
     loginBtn.classList.add('success');
     applyState('success');
     
-    // Confetti animation
     createConfetti();
+    
+    if (rememberMe.checked) {
+      localStorage.setItem('rememberedEmail', email);
+    }
     
     setTimeout(() => {
       window.location.href = '/dashboard';
     }, 2000);
   } catch (err) {
     loginBtn.classList.remove('loading');
-    errorMsg.style.display = 'block';
+    showError('Correo o contraseña incorrectos');
     applyState('disgust');
     console.error('Login error:', err);
   }
 });
+
+// ══════════════════════════════════════════
+// EMAIL VALIDATION
+// ══════════════════════════════════════════
+function isValidEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+// ══════════════════════════════════════════
+// ERROR MESSAGE HANDLER
+// ══════════════════════════════════════════
+function showError(message) {
+  errorMsg.textContent = '🚨 ' + message;
+  errorMsg.style.display = 'block';
+  emailInput.classList.add('error-input');
+  pwInput.classList.add('error-input');
+  
+  setTimeout(() => {
+    emailInput.classList.remove('error-input');
+    pwInput.classList.remove('error-input');
+  }, 600);
+}
 
 // ══════════════════════════════════════════
 // GOOGLE OAUTH HANDLER
@@ -1163,16 +1236,57 @@ btnGoogle.addEventListener('click', async () => {
 });
 
 // ══════════════════════════════════════════
+// FORGOT PASSWORD HANDLER
+// ══════════════════════════════════════════
+forgotLink.addEventListener('click', async (e) => {
+  e.preventDefault();
+  
+  const email = prompt('Ingresa tu correo para resetear la contraseña:');
+  if (!email) return;
+  
+  if (!isValidEmail(email)) {
+    alert('Por favor ingresa un correo válido');
+    return;
+  }
+  
+  try {
+    applyState('peek');
+    const { data, error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/reset-password'
+    });
+    
+    if (error) throw error;
+    
+    alert('✅ Se envió un enlace de reseteo a ' + email);
+    applyState('success');
+  } catch (err) {
+    alert('❌ Error al enviar el correo: ' + err.message);
+    applyState('disgust');
+    console.error('Password reset error:', err);
+  }
+});
+
+// ══════════════════════════════════════════
 // REGISTER LINK HANDLER
 // ══════════════════════════════════════════
 registerLink.addEventListener('click', (e) => {
   e.preventDefault();
   applyState('success');
   
-  // Redirect to registration page
   setTimeout(() => {
     window.location.href = '/register';
   }, 500);
+});
+
+// ══════════════════════════════════════════
+// LOAD REMEMBERED EMAIL
+// ══════════════════════════════════════════
+window.addEventListener('load', () => {
+  const remembered = localStorage.getItem('rememberedEmail');
+  if (remembered) {
+    emailInput.value = remembered;
+    rememberMe.checked = true;
+  }
 });
 
 // ══════════════════════════════════════════
@@ -1192,6 +1306,21 @@ function createConfetti() {
     container.appendChild(piece);
   }
 }
+
+// ══════════════════════════════════════════
+// ENTER KEY SUBMIT
+// ══════════════════════════════════════════
+pwInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    loginBtn.click();
+  }
+});
+
+emailInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    pwInput.focus();
+  }
+});
 </script>
 </body>
 </html>
