@@ -79,18 +79,21 @@ html, body {
 .stage {
   position:relative; z-index:2;
   min-height:100vh;
-  display:flex; align-items:center; justify-content:center;
-  padding:20px 16px;
+  display:flex; align-items:center; justify-content:flex-start;
+  padding:34px clamp(18px,6vw,110px);
+  overflow:hidden;
 }
 
 .card {
-  width:100%; max-width:420px;
-  border-radius:28px;
-  border:1px solid var(--border);
-  box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(124,92,191,0.12);
+  width:100%; max-width:360px;
+  border-radius:22px;
+  border:1px solid rgba(255,107,53,0.25);
+  box-shadow: 0 40px 110px rgba(0,0,0,0.72), 0 0 70px rgba(239,35,60,0.10);
   overflow:hidden;
   animation: cardIn .7s cubic-bezier(.34,1.56,.64,1) both;
   display:flex; flex-direction:column;
+  position:relative;
+  z-index:3;
 }
 @keyframes cardIn {
   from { opacity:0; transform:scale(.9) translateY(30px); }
@@ -101,7 +104,7 @@ html, body {
 .chars-panel {
   background:var(--panel);
   border-bottom:1px solid var(--border);
-  display:flex;
+  display:none;
   flex-direction:column;
   align-items:center;
   position:relative;
@@ -221,7 +224,7 @@ svg.char { overflow:visible; }
 
 /* ── Form panel ── */
 .form-panel {
-  background:var(--card);
+  background:linear-gradient(180deg,rgba(20,10,18,0.92),rgba(12,10,18,0.96));
   padding:32px 28px 36px;
   display:flex; flex-direction:column;
   position:relative;
@@ -606,6 +609,125 @@ h1 {
   margin-bottom:12px;
   animation:errorSlide .3s ease;
 }
+
+/* ── Hero background ── */
+.anime-backdrop{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 72% 42%,rgba(255,107,53,0.16),transparent 24%),
+    radial-gradient(circle at 86% 72%,rgba(124,92,191,0.18),transparent 24%),
+    linear-gradient(90deg,rgba(15,14,23,0.98) 0%,rgba(15,14,23,0.82) 37%,rgba(15,14,23,0.2) 68%,rgba(15,14,23,0.65) 100%);
+}
+.anime-backdrop::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(110deg,transparent 0 58%,rgba(180,20,35,0.28) 58% 61%,transparent 61%),
+    linear-gradient(84deg,transparent 0 66%,rgba(255,255,255,0.07) 66% 67%,transparent 67%),
+    repeating-linear-gradient(106deg,transparent 0 58px,rgba(255,255,255,0.035) 59px,transparent 61px);
+  opacity:.75;
+}
+.kanji-mark{
+  position:absolute;
+  right:9vw;
+  top:8vh;
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(120px,20vw,310px);
+  color:rgba(190,24,44,0.32);
+  transform:rotate(-6deg);
+  letter-spacing:-0.12em;
+  filter:blur(.2px);
+}
+.shadow-hero{
+  position:absolute;
+  right:clamp(10px,7vw,120px);
+  bottom:0;
+  width:min(48vw,620px);
+  height:min(88vh,760px);
+  z-index:2;
+  pointer-events:none;
+  transform-origin:bottom center;
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1),filter .35s,opacity .35s;
+  filter:drop-shadow(0 30px 55px rgba(0,0,0,0.72));
+}
+.shadow-hero::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  bottom:3%;
+  width:38%;
+  height:78%;
+  transform:translateX(-50%);
+  background:
+    radial-gradient(circle at 50% 9%,#d7d7e7 0 3%,#12101b 3.2% 8%,transparent 8.2%),
+    linear-gradient(102deg,transparent 0 28%,#181424 28% 38%,#2a2238 42% 58%,#17131f 62% 73%,transparent 73%),
+    linear-gradient(180deg,#15111d 0%,#08070d 100%);
+  clip-path:polygon(49% 0,60% 7%,64% 18%,76% 29%,70% 44%,83% 62%,64% 70%,61% 100%,40% 100%,36% 70%,17% 62%,30% 44%,24% 29%,36% 18%,39% 7%);
+  border-radius:46% 46% 8% 8%;
+}
+.shadow-hero::after{
+  content:'';
+  position:absolute;
+  left:48%;
+  top:19%;
+  width:78%;
+  height:38%;
+  transform:translateX(-50%) rotate(-9deg);
+  background:linear-gradient(90deg,transparent 0 8%,rgba(255,255,255,0.78) 8% 18%,rgba(230,230,240,0.22) 18% 28%,transparent 28% 100%);
+  clip-path:polygon(0 48%,35% 35%,100% 43%,100% 57%,35% 65%,0 52%);
+  opacity:.8;
+}
+.hero-face{
+  position:absolute;
+  left:50%;
+  top:8%;
+  width:18%;
+  aspect-ratio:1;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:linear-gradient(140deg,#27233d,#0c0b14 62%);
+  box-shadow:inset 8px -10px 18px rgba(0,0,0,0.65),0 0 22px rgba(124,92,191,0.45);
+}
+.hero-face::before,.hero-face::after{
+  content:'';
+  position:absolute;
+  top:47%;
+  width:18%;
+  height:5%;
+  background:#e33b4d;
+  border-radius:999px;
+  box-shadow:0 0 10px #e33b4d;
+  transition:transform .25s,opacity .25s;
+}
+.hero-face::before{left:25%;}
+.hero-face::after{right:25%;}
+.hero-sword{
+  position:absolute;
+  right:18%;
+  bottom:10%;
+  width:2.2%;
+  height:78%;
+  background:linear-gradient(180deg,#fff,#9ca3af 45%,#111827 46% 100%);
+  transform:rotate(36deg);
+  transform-origin:bottom center;
+  border-radius:999px;
+  opacity:.86;
+  box-shadow:0 0 18px rgba(255,255,255,0.22);
+}
+.shadow-hero.hero-peek{transform:translateY(-10px) scale(1.02);filter:drop-shadow(0 35px 60px rgba(0,0,0,0.78)) drop-shadow(0 0 24px rgba(239,35,60,0.18));}
+.shadow-hero.hero-cover{transform:translateY(4px) scale(.99);}
+.shadow-hero.hero-cover .hero-face::before,.shadow-hero.hero-cover .hero-face::after{transform:scaleX(.25);opacity:.45;}
+.shadow-hero.hero-success{transform:translateY(-18px) scale(1.04);filter:drop-shadow(0 38px 62px rgba(0,0,0,0.78)) drop-shadow(0 0 32px rgba(6,214,160,0.22));}
+@media (max-width:820px){
+  .stage{justify-content:center;padding:24px 16px;}
+  .card{max-width:390px;}
+  .shadow-hero{opacity:.16;right:-22vw;width:92vw;height:86vh;}
+  .kanji-mark{right:-4vw;top:12vh;opacity:.55;}
+}
 </style>
 </head>
 <body>
@@ -641,6 +763,11 @@ h1 {
 </div>
 
 <div class="stage">
+  <div class="anime-backdrop"><div class="kanji-mark">影</div></div>
+  <div class="shadow-hero" id="shadowHero">
+    <div class="hero-face"></div>
+    <div class="hero-sword"></div>
+  </div>
   <div class="card">
 
     <!-- ══ CHARACTERS ══ -->
@@ -1170,12 +1297,21 @@ const emailInput   = document.getElementById('emailInput');
 const emailStatus  = document.getElementById('emailStatus');
 const pwInput      = document.getElementById('pwInput');
 const togglePwBtn  = document.getElementById('togglePw');
+const shadowHero   = document.getElementById('shadowHero');
 const loginBtn     = document.getElementById('loginBtn');
 const errorMsg     = document.getElementById('errorMsg');
 const rememberMe   = document.getElementById('rememberMe');
 const forgotLink   = document.getElementById('forgotLink');
 const registerLink = document.getElementById('registerLink');
 const btnGoogle    = document.getElementById('btnGoogle');
+
+function setHeroState(mode='idle') {
+  if (!shadowHero) return;
+  shadowHero.classList.remove('hero-peek','hero-cover','hero-success');
+  if (mode === 'peek') shadowHero.classList.add('hero-peek');
+  if (mode === 'cover') shadowHero.classList.add('hero-cover');
+  if (mode === 'success') shadowHero.classList.add('hero-success');
+}
 
 // ══════════════════════════════════════════
 // MEJORA 7: STAGGER ENTRADA
@@ -1222,16 +1358,16 @@ emailInput.addEventListener('blur', validateEmailLive);
 // ══════════════════════════════════════════
 // CHARACTERS — email focus
 // ══════════════════════════════════════════
-emailInput.addEventListener('focus', () => { applyState('peek'); showBubble('🧐 ¿Cuál es tu correo?'); });
-emailInput.addEventListener('blur', () => { if (document.activeElement !== pwInput) applyState('idle'); });
+emailInput.addEventListener('focus', () => { applyState('peek'); setHeroState('peek'); });
+emailInput.addEventListener('blur', () => { if (document.activeElement !== pwInput) { applyState('idle'); setHeroState('idle'); } });
 emailInput.addEventListener('keypress', e => { if (e.key === 'Enter') pwInput.focus(); });
 
 // Password focus → curiosidad (ojos abiertos)
 pwInput.addEventListener('focus', () => {
-  if (pwVisible) { applyState('covering'); showBubble('😳 ¡No queremos ver!'); }
-  else { applyState('peek'); showBubble('🤔 ¿Cuál será?'); chars.forEach(c => setPupilsLookUp(c, true)); }
+  if (pwVisible) { applyState('covering'); setHeroState('cover'); }
+  else { applyState('peek'); setHeroState('peek'); chars.forEach(c => setPupilsLookUp(c, true)); }
 });
-pwInput.addEventListener('blur', () => { applyState('idle'); chars.forEach(c => setPupilsLookUp(c, false)); });
+pwInput.addEventListener('blur', () => { applyState('idle'); setHeroState('idle'); chars.forEach(c => setPupilsLookUp(c, false)); });
 pwInput.addEventListener('input', () => {
   if (pwInput.value.length > 0 && !pwVisible) applyState('peek');
   else if (!pwInput.value.length) applyState('idle');
@@ -1246,8 +1382,8 @@ togglePwBtn.addEventListener('click', e => {
   pwVisible = !pwVisible;
   pwInput.type = pwVisible ? 'text' : 'password';
   togglePwBtn.textContent = pwVisible ? '🙈' : '👁️';
-  if (pwVisible) { applyState('covering'); showBubble('😳 ¡No queremos ver!'); }
-  else { applyState('peek'); showBubble('👀 Ok, seguimos mirando…'); }
+  if (pwVisible) { applyState('covering'); setHeroState('cover'); }
+  else { applyState('peek'); setHeroState('peek'); }
 });
 
 // Strength
@@ -1300,7 +1436,7 @@ loginBtn.addEventListener('click', async () => {
     if (error) throw error;
 
     loginBtn.classList.remove('loading'); loginBtn.classList.add('success'); loginBtn.textContent = '✅ ¡Entrando!';
-    applyState('success'); createConfetti();
+    applyState('success'); setHeroState('success'); createConfetti();
 
     if (rememberMe.checked) { localStorage.setItem('rememberedEmail', email); }
     else { localStorage.removeItem('rememberedEmail'); }
