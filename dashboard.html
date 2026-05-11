@@ -484,8 +484,7 @@ input:checked+.theme-slider:before{transform:translateX(15px);}
   <div class="section" id="sec-profile">
     <div class="profile-wrap">
       <div class="profile-card">
-        <div class="profile-avatar-big" id="profileAvatarBig" onclick="openAvatarPicker()">?</div>
-        <div class="avatar-edit-hint" onclick="openAvatarPicker()">✏️ Cambiar avatar</div>
+        <div class="profile-avatar-big" id="profileAvatarBig" style="cursor:default;">?</div>
         <div class="profile-display-name" id="profileDisplayName">—</div>
         <div class="profile-username" id="profileUsername">@—</div>
         <div class="profile-email" id="profileEmail">—</div>
@@ -507,20 +506,42 @@ input:checked+.theme-slider:before{transform:translateX(15px);}
       </div>
 
       <div class="profile-section-card">
-        <div class="profile-section-title">✏️ Editar perfil</div>
-        <div class="profile-field"><label>Nombre para mostrar</label><input class="profile-input" id="editDisplayName" placeholder="Tu nombre"/></div>
-        <div class="profile-field"><label>@Usuario único</label><input class="profile-input" id="editUsername" placeholder="tunombre" maxlength="20"/></div>
-        <div class="profile-field"><label>Correo electrónico</label><input class="profile-input" id="editEmail" disabled/></div>
-        <button class="save-btn" id="saveProfileBtn">Guardar cambios</button>
-      </div>
-
-      <div class="profile-section-card">
-        <div class="profile-section-title">🔗 Comparte tu perfil</div>
+        <div class="profile-section-title">🔗 Compartir perfil</div>
         <p style="font-size:11px;color:var(--text-dim);margin-bottom:9px;">Tus amigos te buscan con tu @usuario:</p>
         <div class="share-box">
           <div class="share-val" id="shareUsername">@—</div>
           <button class="copy-btn" onclick="copyUsername()">📋 Copiar</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AJUSTES -->
+  <div class="section" id="sec-settings">
+    <div class="profile-wrap">
+      <div class="profile-section-card">
+        <div class="profile-section-title">⚙️ Ajustes</div>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.5;">Administra tu cuenta, apariencia y datos de jugador.</p>
+      </div>
+
+      <div class="profile-section-card">
+        <div class="profile-section-title">🎨 Avatar</div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="profile-avatar-big" id="settingsAvatar" style="margin:0;flex-shrink:0;">?</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Imagen de perfil</div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px;">Elige un emoji o color para que tus amigos te reconozcan.</div>
+            <button class="copy-btn" onclick="openAvatarPicker()">Cambiar avatar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-section-card">
+        <div class="profile-section-title">✏️ Editar datos</div>
+        <div class="profile-field"><label>Nombre para mostrar</label><input class="profile-input" id="editDisplayName" placeholder="Tu nombre"/></div>
+        <div class="profile-field"><label>@Usuario único</label><input class="profile-input" id="editUsername" placeholder="tunombre" maxlength="20"/></div>
+        <div class="profile-field"><label>Correo electrónico</label><input class="profile-input" id="editEmail" disabled/></div>
+        <button class="save-btn" id="saveProfileBtn">Guardar cambios</button>
       </div>
 
       <div class="profile-section-card">
@@ -544,6 +565,7 @@ input:checked+.theme-slider:before{transform:translateX(15px);}
   <div class="nav-item active" id="nav-home" onclick="switchTab('home')"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></div>
   <div class="nav-item" id="nav-friends" onclick="switchTab('friends')"><span class="nav-icon">👥</span><span class="nav-label">Amigos</span><span class="nav-badge" id="friendsBadge">0</span></div>
   <div class="nav-item" id="nav-profile" onclick="switchTab('profile')"><span class="nav-icon">👤</span><span class="nav-label">Perfil</span></div>
+  <div class="nav-item" id="nav-settings" onclick="switchTab('settings')"><span class="nav-icon">⚙️</span><span class="nav-label">Ajustes</span></div>
 </nav>
 
 <div class="toast" id="toast"></div>
@@ -580,7 +602,7 @@ const COLORS=['#ff6b35','#7c5cbf','#06d6a0','#ffd166','#ef233c','#1e88e5','#00bc
 function setAvatar(el,profile,user){if(!el)return;const pu=user?.user_metadata?.avatar_url||user?.user_metadata?.picture;const em=profile?.avatar_emoji,cl=profile?.avatar_color;const big=el.classList.contains('profile-avatar-big');if(em){el.style.background=cl||'linear-gradient(135deg,#ff6b35,#7c5cbf)';el.innerHTML=`<span style="font-size:${big?'30':'10'}px">${em}</span>`;}else if(pu){el.innerHTML=`<img src="${pu}" alt="av" onerror="this.parentElement.textContent='${(profile?.display_name||user?.email||'?')[0].toUpperCase()}'"/>`;}else{el.style.background=cl||'linear-gradient(135deg,#ff6b35,#7c5cbf)';el.textContent=(profile?.display_name||user?.email||'?')[0].toUpperCase();}}
 
 function openAvatarPicker(){const p=document.getElementById('avatarPicker');p.innerHTML='';AVATARS.forEach(em=>{const d=document.createElement('div');d.className='av-opt'+(selectedAvatar===em?' selected':'');d.textContent=em;d.style.background='rgba(255,255,255,0.05)';d.onclick=()=>{selectedAvatar=em;document.querySelectorAll('.av-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');};p.appendChild(d);});COLORS.forEach(col=>{const d=document.createElement('div');d.className='av-opt'+(selectedAvatar==='color:'+col?' selected':'');d.style.background=col;d.onclick=()=>{selectedAvatar='color:'+col;document.querySelectorAll('.av-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');};p.appendChild(d);});openModal('avatarModal');}
-document.getElementById('saveAvatarBtn').addEventListener('click',async()=>{if(!selectedAvatar)return;const isC=selectedAvatar.startsWith('color:');const emoji=isC?null:selectedAvatar,color=isC?selectedAvatar.replace('color:',''):null;await sb.from('profiles').update({avatar_emoji:emoji,avatar_color:color}).eq('id',currentUser.id);if(currentProfile){currentProfile.avatar_emoji=emoji;currentProfile.avatar_color=color;}setAvatar(document.getElementById('userAvatar'),currentProfile,currentUser);setAvatar(document.getElementById('profileAvatarBig'),currentProfile,currentUser);closeModal('avatarModal');showToast('✅ Avatar actualizado','success');});
+document.getElementById('saveAvatarBtn').addEventListener('click',async()=>{if(!selectedAvatar)return;const isC=selectedAvatar.startsWith('color:');const emoji=isC?null:selectedAvatar,color=isC?selectedAvatar.replace('color:',''):null;await sb.from('profiles').update({avatar_emoji:emoji,avatar_color:color}).eq('id',currentUser.id);if(currentProfile){currentProfile.avatar_emoji=emoji;currentProfile.avatar_color=color;}setAvatar(document.getElementById('userAvatar'),currentProfile,currentUser);setAvatar(document.getElementById('profileAvatarBig'),currentProfile,currentUser);setAvatar(document.getElementById('settingsAvatar'),currentProfile,currentUser);closeModal('avatarModal');showToast('✅ Avatar actualizado','success');});
 
 // THEME
 function applyTheme(light){document.documentElement.setAttribute('data-theme',light?'light':'dark');document.getElementById('themeToggle').checked=light;document.getElementById('themeToggle2').checked=light;localStorage.setItem('gz_theme',light?'light':'dark');}
@@ -602,7 +624,7 @@ function clearNotifs(){notifications.forEach(n=>n.unread=false);document.getElem
 function timeAgo(d){const s=Math.round((Date.now()-d)/1000);if(s<60)return 'ahora mismo';if(s<3600)return Math.round(s/60)+' min';return Math.round(s/3600)+'h';}
 
 // NAV
-function switchTab(tab){currentTab=tab;document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById('sec-'+tab).classList.add('active');document.getElementById('nav-'+tab).classList.add('active');if(tab==='friends')loadFriendsSection();if(tab==='profile')loadProfileSection();}
+function switchTab(tab){currentTab=tab;document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById('sec-'+tab).classList.add('active');document.getElementById('nav-'+tab).classList.add('active');if(tab==='friends')loadFriendsSection();if(tab==='profile'||tab==='settings')loadProfileSection();}
 function gameUrl(g,params=''){
   const page=g==='chess'?CHESS_PAGE:g+'.html';
   return page+(params?'?'+params:'');
@@ -643,7 +665,7 @@ document.getElementById('fpChallengeBtn').addEventListener('click',()=>{
 async function loadFriendsSection(){await loadRequests();await loadFriendsList();}
 
 // PERFIL
-async function loadProfileSection(){if(!currentProfile||!currentUser)return;const name=currentProfile.display_name||currentUser.email.split('@')[0];setAvatar(document.getElementById('profileAvatarBig'),currentProfile,currentUser);document.getElementById('profileDisplayName').textContent=name;document.getElementById('profileUsername').textContent='@'+(currentProfile.username||'—');document.getElementById('profileEmail').textContent=currentUser.email||'—';document.getElementById('shareUsername').textContent='@'+(currentProfile.username||'—');document.getElementById('editDisplayName').value=name;document.getElementById('editUsername').value=currentProfile.username||'';document.getElementById('editEmail').value=currentUser.email||'';try{const{data:sc}=await sb.from('scores').select('score,won').eq('user_id',currentUser.id);const partidas=sc?.length||0,victorias=sc?.filter(r=>r.won).length||0,puntos=sc?.reduce((a,r)=>a+(r.score||0),0)||0,xp=victorias*20+partidas*5;let streak=0;for(const r of(sc||[])){if(r.won)streak++;else break;}document.getElementById('pStatPartidas').textContent=partidas;document.getElementById('pStatVictorias').textContent=victorias;document.getElementById('pStatRacha').textContent=streak;const league=getLeague(xp);document.getElementById('profileLeagueIcon').textContent=league.icon;document.getElementById('profileLeagueName').textContent='Liga '+league.name;const{data:frR}=await sb.from('friends').select('id').eq('user_id',currentUser.id).eq('status','accepted');const fc=frR?.length||0;document.getElementById('pStatAmigos').textContent=fc;const earned=computeAchievements({partidas,victorias,puntos,xp,streak},fc);renderLogros(earned,document.getElementById('logrosGrid'),false);}catch(e){}}
+async function loadProfileSection(){if(!currentProfile||!currentUser)return;const name=currentProfile.display_name||currentUser.email.split('@')[0];setAvatar(document.getElementById('profileAvatarBig'),currentProfile,currentUser);setAvatar(document.getElementById('settingsAvatar'),currentProfile,currentUser);document.getElementById('profileDisplayName').textContent=name;document.getElementById('profileUsername').textContent='@'+(currentProfile.username||'—');document.getElementById('profileEmail').textContent=currentUser.email||'—';document.getElementById('shareUsername').textContent='@'+(currentProfile.username||'—');document.getElementById('editDisplayName').value=name;document.getElementById('editUsername').value=currentProfile.username||'';document.getElementById('editEmail').value=currentUser.email||'';try{const{data:sc}=await sb.from('scores').select('score,won').eq('user_id',currentUser.id);const partidas=sc?.length||0,victorias=sc?.filter(r=>r.won).length||0,puntos=sc?.reduce((a,r)=>a+(r.score||0),0)||0,xp=victorias*20+partidas*5;let streak=0;for(const r of(sc||[])){if(r.won)streak++;else break;}document.getElementById('pStatPartidas').textContent=partidas;document.getElementById('pStatVictorias').textContent=victorias;document.getElementById('pStatRacha').textContent=streak;const league=getLeague(xp);document.getElementById('profileLeagueIcon').textContent=league.icon;document.getElementById('profileLeagueName').textContent='Liga '+league.name;const{data:frR}=await sb.from('friends').select('id').eq('user_id',currentUser.id).eq('status','accepted');const fc=frR?.length||0;document.getElementById('pStatAmigos').textContent=fc;const earned=computeAchievements({partidas,victorias,puntos,xp,streak},fc);renderLogros(earned,document.getElementById('logrosGrid'),false);}catch(e){}}
 
 document.getElementById('saveProfileBtn').addEventListener('click',async()=>{const dn=document.getElementById('editDisplayName').value.trim(),un=document.getElementById('editUsername').value.trim().toLowerCase(),btn=document.getElementById('saveProfileBtn');if(!dn||!un){showToast('❌ Completa todos los campos','error');return;}if(!/^[a-z0-9_]{3,20}$/.test(un)){showToast('❌ Usuario inválido (3-20 chars, a-z/0-9/_)','error');return;}btn.textContent='⏳ Guardando…';btn.classList.add('loading');const{error}=await sb.from('profiles').update({display_name:dn,username:un}).eq('id',currentUser.id);btn.classList.remove('loading');btn.textContent='Guardar cambios';if(error){showToast('❌ '+(error.message.includes('unique')?'Ese @usuario ya está en uso':error.message),'error');}else{currentProfile.display_name=dn;currentProfile.username=un;populateUI();loadProfileSection();showToast('✅ Perfil actualizado','success');}});
 
