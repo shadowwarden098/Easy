@@ -22,11 +22,7 @@
             --gold: #ffd700;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body {
             width: 100%;
@@ -36,7 +32,7 @@
             background: #000;
         }
 
-        /* ─── CAPAS DE FONDO (CARRUSEL) ─── */
+        /* Capas de fondo */
         .bg-layer {
             position: fixed;
             inset: 0;
@@ -60,7 +56,7 @@
             background: linear-gradient(to right, rgba(7, 5, 16, 0.6) 0%, rgba(7, 5, 16, 0.2) 100%);
         }
 
-        /* ─── LLUVIA DE PÉTALOS (CANVAS) ─── */
+        /* Lluvia de pétalos */
         #petalCanvas {
             position: fixed;
             inset: 0;
@@ -68,7 +64,6 @@
             pointer-events: none;
         }
 
-        /* ─── CONTENEDOR PRINCIPAL ─── */
         .main-container {
             position: relative;
             z-index: 1;
@@ -80,7 +75,6 @@
             padding-left: 8vw;
         }
 
-        /* ─── PANEL DE VIDRIO ─── */
         .auth-panel {
             width: 400px;
             max-width: 90%;
@@ -125,7 +119,6 @@
             to { --angle: 360deg; }
         }
 
-        /* Logo con glitch */
         .logo {
             font-family: 'Cinzel', serif;
             font-size: 28px;
@@ -164,14 +157,8 @@
             5% { opacity: 0; }
         }
 
-        .subtitle {
-            font-size: 12px;
-            letter-spacing: 3px;
-            margin-bottom: 5px;
-            opacity: 0.8;
-        }
+        .subtitle { font-size: 12px; letter-spacing: 3px; margin-bottom: 5px; opacity: 0.8; }
 
-        /* Frase aleatoria */
         .random-phrase {
             font-size: 11px;
             font-style: italic;
@@ -180,7 +167,6 @@
             min-height: 20px;
         }
 
-        /* Pestañas */
         .tabs {
             display: flex;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
@@ -206,10 +192,7 @@
         .form-section { display: none; }
         .form-section.active { display: block; }
 
-        .field {
-            margin-bottom: 20px;
-            position: relative;
-        }
+        .field { margin-bottom: 20px; position: relative; }
         .field input {
             width: 100%;
             padding: 14px 16px;
@@ -231,17 +214,13 @@
             80% { transform: translateX(-3px); }
         }
 
-        /* Barra de fuerza de contraseña (espada) */
         .pw-strength {
             display: flex;
             align-items: center;
             gap: 8px;
             margin-top: 6px;
         }
-        .pw-strength .sword-icon {
-            font-size: 16px;
-            transition: 0.3s;
-        }
+        .pw-strength .sword-icon { font-size: 16px; transition: 0.3s; }
         .pw-strength .strength-bar {
             flex: 1;
             height: 4px;
@@ -344,7 +323,7 @@
             right: -15px;
             width: 70px;
             height: 70px;
-            background: url('images/gojo_mini.png') no-repeat center/contain;
+            background: url('gojo_mini.png') no-repeat center/contain;
             transition: transform 0.3s;
             z-index: 2;
             filter: drop-shadow(0 0 8px rgba(0, 180, 255, 0.6));
@@ -359,7 +338,6 @@
             75%{ transform: scale(1.2) rotate(5deg); }
         }
 
-        /* Niebla inferior */
         .fog {
             position: fixed;
             bottom: 0;
@@ -388,35 +366,29 @@
 </head>
 <body>
 
-    <!-- Capas de fondo (carrusel) -->
-    <div class="bg-layer active zoom" style="background-image: url('images/bg1.jpg');"></div>
-    <div class="bg-layer" style="background-image: url('images/bg2.jpg');"></div>
-    <div class="bg-layer" style="background-image: url('images/bg3.jpg');"></div>
+    <!-- Capas de fondo (carrusel) – ahora sin carpeta images -->
+    <div class="bg-layer active zoom" style="background-image: url('bg1.jpg');"></div>
+    <div class="bg-layer" style="background-image: url('bg2.jpg');"></div>
+    <div class="bg-layer" style="background-image: url('bg3.jpg');"></div>
     <div class="overlay"></div>
 
-    <!-- Canvas para pétalos -->
     <canvas id="petalCanvas"></canvas>
-
-    <!-- Niebla -->
     <div class="fog"></div>
 
-    <!-- Contenido principal -->
     <div class="main-container">
         <div class="auth-panel">
-            <!-- Mini Gojo -->
             <div class="mini-gojo" id="miniGojo"></div>
 
             <div class="logo">Shadow Garden</div>
             <div class="subtitle">Autenticación</div>
             <div class="random-phrase" id="randomPhrase"></div>
 
-            <!-- Pestañas -->
             <div class="tabs">
                 <div class="tab active" id="tabLogin">Iniciar sesión</div>
                 <div class="tab" id="tabRegister">Registrarse</div>
             </div>
 
-            <!-- Sección Login -->
+            <!-- Login -->
             <div class="form-section active" id="loginSection">
                 <div class="field">
                     <input type="email" id="emailInput" placeholder="Email" autocomplete="off">
@@ -441,7 +413,7 @@
                 </div>
             </div>
 
-            <!-- Sección Registro -->
+            <!-- Registro -->
             <div class="form-section" id="registerSection">
                 <div class="field">
                     <input type="email" id="regEmail" placeholder="Email" autocomplete="off">
@@ -462,7 +434,7 @@
         </div>
     </div>
 
-    <!-- Modal recuperar contraseña -->
+    <!-- Modal recuperar -->
     <div id="resetModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); justify-content:center; align-items:center; z-index:1000;">
         <div style="background: rgba(10,5,20,0.95); border:1px solid rgba(255,255,255,0.2); border-radius:16px; padding:30px; width:90%; max-width:380px; color:white; text-align:center;">
             <h3 style="font-family:'Cinzel',serif; margin-bottom:15px;">Recuperar acceso</h3>
@@ -506,7 +478,7 @@
             bgLayers[currentBg].classList.add('active', 'zoom');
         }, 6000);
 
-        // ================== LLUVIA DE PÉTALOS (CANVAS) ==================
+        // ================== LLUVIA DE PÉTALOS ==================
         const canvas = document.getElementById('petalCanvas');
         const ctx = canvas.getContext('2d');
         let W, H, petals = [];
@@ -680,7 +652,7 @@
             }
         });
 
-        // ================== GOOGLE OAUTH ==================
+        // ================== GOOGLE ==================
         googleBtn.addEventListener('click', async () => {
             googleText.style.display = 'none';
             googleSpinner.style.display = 'block';
@@ -728,7 +700,7 @@
             }
         });
 
-        // ================== RESTABLECER CONTRASEÑA ==================
+        // ================== RESTABLECER ==================
         document.getElementById('forgotLink').addEventListener('click', (e) => {
             e.preventDefault();
             resetModal.style.display = 'flex';
@@ -757,7 +729,7 @@
             }
         });
 
-        // ================== RECORDAR EMAIL / AVATAR ==================
+        // ================== RECORDAR EMAIL ==================
         window.addEventListener('load', () => {
             const remembered = localStorage.getItem('rememberedEmail');
             if (remembered) {
@@ -765,8 +737,6 @@
                 document.getElementById('pwInput').focus();
             }
         });
-        // Guardar email si se marca "Recordarme" (no hay checkbox en este diseño, pero puedes añadirlo; por ahora usamos login exitoso para guardar)
-        // Podemos añadirlo fácil si quieres, pero lo dejo como mejora futura.
 
         // ================== SESIÓN EXISTENTE ==================
         sb.auth.getSession().then(({ data: { session } }) => {
