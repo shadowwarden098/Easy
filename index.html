@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jujutsu High — Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Shadow Garden — Autenticación</title>
     <style>
         :root {
             --bg: #070510;
@@ -19,51 +18,52 @@
             --input-bg: rgba(255, 255, 255, 0.04);
             --success: #00ff88;
             --error: #ff0028;
-            --gold: #ffd700;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        html, body {
+        html,
+        body {
             width: 100%;
             height: 100%;
             font-family: 'DM Sans', sans-serif;
             overflow: hidden;
-            background: #000;
         }
 
-        /* Capas de fondo */
-        .bg-layer {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.8s ease-in-out;
-        }
-        .bg-layer.active { opacity: 1; }
-        .bg-layer.zoom { animation: bgZoom 20s ease-in-out infinite alternate; }
-        @keyframes bgZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
-        }
-
-        .overlay {
+        /* Fondo anime con animación de zoom */
+        .background {
             position: fixed;
             inset: 0;
             z-index: -1;
-            background: linear-gradient(to right, rgba(7, 5, 16, 0.6) 0%, rgba(7, 5, 16, 0.2) 100%);
+            background: url("images/login.jpg") no-repeat center;
+            background-size: cover;
+            animation: bgZoom 20s ease-in-out infinite alternate;
         }
 
-        /* Lluvia de pétalos */
-        #petalCanvas {
+        @keyframes bgZoom {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.08);
+            }
+        }
+
+        /* Capa de superposición para mejorar legibilidad */
+        .overlay {
             position: fixed;
             inset: 0;
             z-index: 0;
-            pointer-events: none;
+            background: linear-gradient(to right,
+                    rgba(7, 5, 16, 0.6) 0%,
+                    rgba(7, 5, 16, 0.2) 100%);
         }
 
+        /* Contenedor principal */
         .main-container {
             position: relative;
             z-index: 1;
@@ -75,103 +75,54 @@
             padding-left: 8vw;
         }
 
+        /* Panel de vidrio (login/registro) */
         .auth-panel {
             width: 400px;
             max-width: 90%;
-            background: rgba(143, 132, 100, 0.35);
-            backdrop-filter: blur(18px);
+            background: rgba(143, 132, 100, 0.4);
+            backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
-            padding: 45px 32px 35px;
+            padding: 40px 32px;
             text-align: center;
             color: white;
             animation: slideIn 1s ease forwards;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
         }
+
         @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        /* Destello mágico en el borde */
-        .auth-panel::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 22px;
-            padding: 2px;
-            background: conic-gradient(from var(--angle, 0deg), transparent 20%, var(--purple-light), var(--gold), transparent 80%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 4s linear infinite;
-            z-index: -1;
-        }
-        @property --angle {
-            syntax: '<angle>';
-            initial-value: 0deg;
-            inherits: false;
-        }
-        @keyframes rotateBorder {
-            to { --angle: 360deg; }
-        }
-
-        .logo {
+        .auth-panel .logo {
             font-family: 'Cinzel', serif;
             font-size: 28px;
             letter-spacing: 6px;
             margin-bottom: 5px;
             text-shadow: 0 0 15px rgba(192, 0, 26, 0.7);
-            position: relative;
-            display: inline-block;
-        }
-        .logo::before,
-        .logo::after {
-            content: 'Shadow Garden';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-        }
-        .logo::before {
-            color: #0ff;
-            animation: glitch1 2s infinite;
-        }
-        .logo::after {
-            color: #f0f;
-            animation: glitch2 2s infinite;
-        }
-        @keyframes glitch1 {
-            0%, 100% { opacity: 0; }
-            2% { opacity: 0.8; transform: translate(2px, -1px); }
-            4% { opacity: 0; }
-        }
-        @keyframes glitch2 {
-            0%, 100% { opacity: 0; }
-            3% { opacity: 0.8; transform: translate(-2px, 1px); }
-            5% { opacity: 0; }
         }
 
-        .subtitle { font-size: 12px; letter-spacing: 3px; margin-bottom: 5px; opacity: 0.8; }
-
-        .random-phrase {
-            font-size: 11px;
-            font-style: italic;
-            margin-bottom: 25px;
-            color: var(--purple-light);
-            min-height: 20px;
+        .auth-panel .subtitle {
+            font-size: 12px;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            opacity: 0.8;
         }
 
+        /* Pestañas */
         .tabs {
             display: flex;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             margin-bottom: 25px;
         }
+
         .tab {
             flex: 1;
             padding: 10px;
@@ -184,15 +135,25 @@
             border-bottom: 2px solid transparent;
             color: rgba(255, 255, 255, 0.6);
         }
+
         .tab.active {
             border-bottom-color: var(--red-glow);
             color: white;
         }
 
-        .form-section { display: none; }
-        .form-section.active { display: block; }
+        /* Formularios */
+        .form-section {
+            display: none;
+        }
 
-        .field { margin-bottom: 20px; position: relative; }
+        .form-section.active {
+            display: block;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
         .field input {
             width: 100%;
             padding: 14px 16px;
@@ -204,35 +165,34 @@
             color: white;
             transition: 0.3s;
         }
-        .field input::placeholder { color: rgba(255, 255, 255, 0.6); }
-        .field input:focus { border-bottom-color: var(--red-glow); }
-        .field input.error { border-bottom-color: var(--error); animation: shake 0.4s ease; }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-5px); }
-            60% { transform: translateX(5px); }
-            80% { transform: translateX(-3px); }
+
+        .field input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        .pw-strength {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 6px;
+        .field input:focus {
+            border-bottom-color: var(--red-glow);
         }
-        .pw-strength .sword-icon { font-size: 16px; transition: 0.3s; }
-        .pw-strength .strength-bar {
-            flex: 1;
-            height: 4px;
-            border-radius: 2px;
-            background: rgba(255,255,255,0.1);
-            overflow: hidden;
+
+        .field input.error {
+            border-bottom-color: var(--error);
+            animation: shake 0.4s ease;
         }
-        .pw-strength .strength-fill {
-            height: 100%;
-            width: 0%;
-            transition: width 0.4s ease, background-color 0.4s ease;
-            background: var(--error);
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-5px);
+            }
+            60% {
+                transform: translateX(5px);
+            }
+            80% {
+                transform: translateX(-3px);
+            }
         }
 
         .btn {
@@ -252,17 +212,17 @@
             margin-top: 10px;
             box-shadow: 0 0 20px rgba(192, 0, 26, 0.4);
         }
+
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 0 30px rgba(192, 0, 26, 0.6);
-            animation: btnVibrate 0.3s ease;
         }
-        @keyframes btnVibrate {
-            0%, 100% { transform: translateY(-2px) rotate(0); }
-            25% { transform: translateY(-2px) rotate(0.5deg); }
-            75% { transform: translateY(-2px) rotate(-0.5deg); }
+
+        .btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
         }
-        .btn.loading { pointer-events: none; opacity: 0.7; }
+
         .btn.success {
             background: linear-gradient(135deg, #005525, #00ff88);
             box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
@@ -276,8 +236,18 @@
             padding: 8px 12px;
             border-radius: 5px;
         }
-        .msg.error { background: rgba(192, 0, 26, 0.2); border: 1px solid rgba(192, 0, 26, 0.5); color: #ff6070; }
-        .msg.success { background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); color: var(--success); }
+
+        .msg.error {
+            background: rgba(192, 0, 26, 0.2);
+            border: 1px solid rgba(192, 0, 26, 0.5);
+            color: #ff6070;
+        }
+
+        .msg.success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: var(--success);
+        }
 
         .extra-links {
             display: flex;
@@ -285,8 +255,16 @@
             margin-top: 20px;
             font-size: 13px;
         }
-        .extra-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: 0.3s; }
-        .extra-links a:hover { color: var(--red-glow); }
+
+        .extra-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .extra-links a:hover {
+            color: var(--red-glow);
+        }
 
         .google-btn {
             width: 100%;
@@ -304,7 +282,11 @@
             gap: 8px;
             transition: 0.3s;
         }
-        .google-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+        .google-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         .spinner {
             display: none;
             width: 18px;
@@ -314,91 +296,50 @@
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Mini Gojo */
-        .mini-gojo {
-            position: absolute;
-            top: -35px;
-            right: -15px;
-            width: 70px;
-            height: 70px;
-            background: url('gojo_mini.png') no-repeat center/contain;
-            transition: transform 0.3s;
-            z-index: 2;
-            filter: drop-shadow(0 0 8px rgba(0, 180, 255, 0.6));
-        }
-        .mini-gojo.surprised {
-            transform: scale(1.2) rotate(5deg);
-            animation: miniShake 0.5s ease;
-        }
-        @keyframes miniShake {
-            0%,100%{ transform: scale(1.2) rotate(0); }
-            25%{ transform: scale(1.2) rotate(-5deg); }
-            75%{ transform: scale(1.2) rotate(5deg); }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
-        .fog {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-            z-index: 1;
-            pointer-events: none;
-            animation: fogFloat 6s ease-in-out infinite alternate;
-        }
-        @keyframes fogFloat {
-            0% { opacity: 0.6; transform: translateY(0); }
-            100% { opacity: 0.9; transform: translateY(-8px); }
-        }
-
+        /* Ajustes responsive */
         @media (max-width: 500px) {
             .main-container {
                 padding-left: 5vw;
                 padding-right: 5vw;
                 justify-content: center;
             }
-            .auth-panel { padding: 30px 20px; }
+            .auth-panel {
+                padding: 30px 20px;
+            }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <!-- Capas de fondo (carrusel) – ahora sin carpeta images -->
-    <div class="bg-layer active zoom" style="background-image: url('login.jpg');"></div>
-    <div class="bg-layer" style="background-image: url('bg2.jpg');"></div>
-    <div class="bg-layer" style="background-image: url('bg3.jpg');"></div>
+    <!-- Fondo animado -->
+    <div class="background"></div>
     <div class="overlay"></div>
-
-    <canvas id="petalCanvas"></canvas>
-    <div class="fog"></div>
 
     <div class="main-container">
         <div class="auth-panel">
-            <div class="mini-gojo" id="miniGojo"></div>
-
             <div class="logo">Shadow Garden</div>
-            <div class="subtitle">Autenticación</div>
-            <div class="random-phrase" id="randomPhrase"></div>
+            <div class="subtitle">Sistema de autenticación</div>
 
+            <!-- Pestañas -->
             <div class="tabs">
                 <div class="tab active" id="tabLogin">Iniciar sesión</div>
                 <div class="tab" id="tabRegister">Registrarse</div>
             </div>
 
-            <!-- Login -->
+            <!-- Sección de Login -->
             <div class="form-section active" id="loginSection">
                 <div class="field">
                     <input type="email" id="emailInput" placeholder="Email" autocomplete="off">
                 </div>
                 <div class="field">
                     <input type="password" id="pwInput" placeholder="Contraseña" autocomplete="off">
-                    <div class="pw-strength" id="pwStrengthBox" style="display:none;">
-                        <span class="sword-icon">🗡️</span>
-                        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
-                    </div>
                 </div>
                 <div class="msg error" id="loginError"></div>
                 <div class="msg success" id="loginSuccess"></div>
@@ -413,7 +354,7 @@
                 </div>
             </div>
 
-            <!-- Registro -->
+            <!-- Sección de Registro -->
             <div class="form-section" id="registerSection">
                 <div class="field">
                     <input type="email" id="regEmail" placeholder="Email" autocomplete="off">
@@ -434,7 +375,7 @@
         </div>
     </div>
 
-    <!-- Modal recuperar -->
+    <!-- Modal para recuperar contraseña -->
     <div id="resetModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); justify-content:center; align-items:center; z-index:1000;">
         <div style="background: rgba(10,5,20,0.95); border:1px solid rgba(255,255,255,0.2); border-radius:16px; padding:30px; width:90%; max-width:380px; color:white; text-align:center;">
             <h3 style="font-family:'Cinzel',serif; margin-bottom:15px;">Recuperar acceso</h3>
@@ -448,82 +389,20 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ================== SUPABASE ==================
+        // ================== CONFIGURACIÓN SUPABASE ==================
         const sb = supabase.createClient(
             'https://mtffjwaybktpwbavsvoa.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10ZmZqd2F5Ymt0cHdiYXZzdm9hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNzQ2MzksImV4cCI6MjA5Mzk1MDYzOX0.2qEw2rHe7h3o5RASSncT6w0QI9wCNYKr_mMmmszkFHI'
         );
 
-        // ================== FRASES DE GOJO ==================
-        const GOJO_PHRASES = [
-            "Yo soy el más fuerte.",
-            "No te preocupes, soy el hechicero más poderoso.",
-            "¿Eso es todo lo que tienes?",
-            "Mis ojos ven todo… incluso tu contraseña.",
-            "El infinito es absoluto.",
-            "¿Crees que puedes entrar sin más? Te observaré.",
-        ];
-        function setRandomPhrase() {
-            const phrase = GOJO_PHRASES[Math.floor(Math.random() * GOJO_PHRASES.length)];
-            document.getElementById('randomPhrase').textContent = phrase;
-        }
-        setRandomPhrase();
-
-        // ================== CARRUSEL DE FONDOS ==================
-        let currentBg = 0;
-        const bgLayers = document.querySelectorAll('.bg-layer');
-        setInterval(() => {
-            bgLayers[currentBg].classList.remove('active', 'zoom');
-            currentBg = (currentBg + 1) % bgLayers.length;
-            bgLayers[currentBg].classList.add('active', 'zoom');
-        }, 6000);
-
-        // ================== LLUVIA DE PÉTALOS ==================
-        const canvas = document.getElementById('petalCanvas');
-        const ctx = canvas.getContext('2d');
-        let W, H, petals = [];
-        function resizeCanvas() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        const PINK = '#ffb7c5', PURPLE = '#c9a0dc';
-        for (let i = 0; i < 35; i++) {
-            petals.push({
-                x: Math.random() * W,
-                y: Math.random() * H,
-                r: 3 + Math.random() * 6,
-                speed: 0.5 + Math.random() * 1.5,
-                sway: Math.random() * 0.5 - 0.25,
-                color: Math.random() > 0.5 ? PINK : PURPLE,
-                angle: Math.random() * Math.PI * 2
-            });
-        }
-        function drawPetals() {
-            ctx.clearRect(0, 0, W, H);
-            petals.forEach(p => {
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.angle);
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.ellipse(0, 0, p.r, p.r * 0.6, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-                p.y += p.speed;
-                p.x += Math.sin(p.angle) * 0.4;
-                p.angle += 0.01;
-                if (p.y > H + 20) { p.y = -20; p.x = Math.random() * W; }
-                if (p.x > W + 20) p.x = -20;
-                if (p.x < -20) p.x = W + 20;
-            });
-            requestAnimationFrame(drawPetals);
-        }
-        drawPetals();
-
         // ================== ELEMENTOS DEL DOM ==================
+        // Pestañas
         const tabLogin = document.getElementById('tabLogin');
         const tabRegister = document.getElementById('tabRegister');
         const loginSection = document.getElementById('loginSection');
         const registerSection = document.getElementById('registerSection');
+
+        // Login
         const emailInput = document.getElementById('emailInput');
         const pwInput = document.getElementById('pwInput');
         const loginBtn = document.getElementById('loginBtn');
@@ -532,20 +411,21 @@
         const googleBtn = document.getElementById('googleLoginBtn');
         const googleSpinner = document.getElementById('googleSpinner');
         const googleText = document.getElementById('googleText');
+
+        // Registro
         const regEmail = document.getElementById('regEmail');
         const regPw = document.getElementById('regPw');
         const regPw2 = document.getElementById('regPw2');
         const registerBtn = document.getElementById('registerBtn');
         const regError = document.getElementById('regError');
         const regSuccess = document.getElementById('regSuccess');
+
+        // Restablecer
         const resetModal = document.getElementById('resetModal');
         const resetEmail = document.getElementById('resetEmail');
         const sendResetBtn = document.getElementById('sendResetBtn');
         const resetMsg = document.getElementById('resetMsg');
         const closeResetModal = document.getElementById('closeResetModal');
-        const pwStrengthBox = document.getElementById('pwStrengthBox');
-        const strengthFill = document.getElementById('strengthFill');
-        const miniGojo = document.getElementById('miniGojo');
 
         // ================== CAMBIO DE PESTAÑAS ==================
         function setActiveTab(tab) {
@@ -554,22 +434,26 @@
                 registerSection.classList.remove('active');
                 tabLogin.classList.add('active');
                 tabRegister.classList.remove('active');
-                miniGojo.classList.remove('surprised');
                 limpiarMensajes();
             } else {
                 registerSection.classList.add('active');
                 loginSection.classList.remove('active');
                 tabRegister.classList.add('active');
                 tabLogin.classList.remove('active');
-                miniGojo.classList.add('surprised');
-                setTimeout(() => miniGojo.classList.remove('surprised'), 600);
                 limpiarMensajes();
             }
         }
+
         tabLogin.addEventListener('click', () => setActiveTab('login'));
         tabRegister.addEventListener('click', () => setActiveTab('register'));
-        document.getElementById('toRegisterLink').addEventListener('click', (e) => { e.preventDefault(); setActiveTab('register'); });
-        document.getElementById('toLoginLink').addEventListener('click', (e) => { e.preventDefault(); setActiveTab('login'); });
+        document.getElementById('toRegisterLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            setActiveTab('register');
+        });
+        document.getElementById('toLoginLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            setActiveTab('login');
+        });
 
         function limpiarMensajes() {
             loginError.style.display = 'none';
@@ -578,61 +462,40 @@
             regSuccess.style.display = 'none';
         }
 
+        // ================== FUNCIONES AUXILIARES ==================
         function esEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
-        function mostrarError(el, msg) { el.textContent = '⚠ ' + msg; el.style.display = 'block'; }
-        function mostrarExito(el, msg) { el.textContent = '✓ ' + msg; el.style.display = 'block'; }
 
-        // ================== BARRA DE FUERZA DE CONTRASEÑA ==================
-        pwInput.addEventListener('input', () => {
-            const pw = pwInput.value;
-            if (pw.length === 0) {
-                pwStrengthBox.style.display = 'none';
-                return;
-            }
-            pwStrengthBox.style.display = 'flex';
-            let score = 0;
-            if (pw.length >= 6) score++;
-            if (pw.length >= 10) score++;
-            if (/[A-Z]/.test(pw)) score++;
-            if (/[0-9]/.test(pw)) score++;
-            if (/[^a-zA-Z0-9]/.test(pw)) score++;
-            const fill = score * 20;
-            strengthFill.style.width = fill + '%';
-            const colors = ['#ff0028', '#ff6000', '#ffd166', '#00cc66', '#00ff88'];
-            strengthFill.style.background = colors[Math.min(score, 4)];
-        });
-
-        // ================== SONIDO AL ESCRIBIR ==================
-        function playKeySound() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.08);
-            } catch(e) {}
+        function mostrarError(elemento, msg) {
+            elemento.textContent = '⚠ ' + msg;
+            elemento.style.display = 'block';
+            elemento.classList.add('error');
+            setTimeout(() => elemento.classList.remove('error'), 2000);
         }
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('keydown', playKeySound);
-        });
+
+        function mostrarExito(elemento, msg) {
+            elemento.textContent = '✓ ' + msg;
+            elemento.style.display = 'block';
+        }
 
         // ================== LOGIN ==================
         loginBtn.addEventListener('click', async () => {
             const email = emailInput.value.trim();
             const pw = pwInput.value;
             limpiarMensajes();
-            if (!email || !pw) { mostrarError(loginError, 'Completa todos los campos'); return; }
-            if (!esEmail(email)) { mostrarError(loginError, 'Correo inválido'); return; }
+
+            if (!email || !pw) {
+                mostrarError(loginError, 'Completa todos los campos');
+                return;
+            }
+            if (!esEmail(email)) {
+                mostrarError(loginError, 'Correo inválido');
+                return;
+            }
+
             loginBtn.classList.add('loading');
             loginBtn.textContent = 'Verificando…';
             try {
-                const { error } = await sb.auth.signInWithPassword({ email, password: pw });
+                const { data, error } = await sb.auth.signInWithPassword({ email, password: pw });
                 if (error) throw error;
                 loginBtn.classList.remove('loading');
                 loginBtn.classList.add('success');
@@ -652,7 +515,7 @@
             }
         });
 
-        // ================== GOOGLE ==================
+        // ================== GOOGLE OAUTH ==================
         googleBtn.addEventListener('click', async () => {
             googleText.style.display = 'none';
             googleSpinner.style.display = 'block';
@@ -675,9 +538,11 @@
             const pw = regPw.value;
             const pw2 = regPw2.value;
             limpiarMensajes();
+
             if (!esEmail(email)) { mostrarError(regError, 'Correo inválido'); return; }
             if (pw.length < 6) { mostrarError(regError, 'Mínimo 6 caracteres'); return; }
             if (pw !== pw2) { mostrarError(regError, 'Las contraseñas no coinciden'); return; }
+
             registerBtn.classList.add('loading');
             registerBtn.textContent = 'Creando…';
             try {
@@ -686,12 +551,18 @@
                 registerBtn.textContent = 'Crear cuenta';
                 if (error) {
                     let m = error.message;
-                    if (m.includes('already registered')) m = 'Este correo ya está registrado';
+                    if (m.includes('already registered') || m.includes('User already registered')) m = 'Este correo ya está registrado';
                     mostrarError(regError, m);
                 } else {
-                    const necesita = data.user && !data.session;
-                    mostrarExito(regSuccess, necesita ? '✓ Revisa tu Gmail para confirmar' : '✓ ¡Cuenta creada! Ya puedes iniciar sesión');
-                    if (!necesita) setTimeout(() => { setActiveTab('login'); emailInput.value = email; }, 2500);
+                    const necesitaConfirmar = data.user && !data.session;
+                    const msg = necesitaConfirmar ? '✓ Revisa tu Gmail para confirmar' : '✓ ¡Cuenta creada! Ya puedes iniciar sesión';
+                    mostrarExito(regSuccess, msg);
+                    if (!necesitaConfirmar) {
+                        setTimeout(() => {
+                            setActiveTab('login');
+                            emailInput.value = email;
+                        }, 2500);
+                    }
                 }
             } catch (err) {
                 registerBtn.classList.remove('loading');
@@ -700,13 +571,17 @@
             }
         });
 
-        // ================== RESTABLECER ==================
+        // ================== RESTABLECER CONTRASEÑA ==================
         document.getElementById('forgotLink').addEventListener('click', (e) => {
             e.preventDefault();
             resetModal.style.display = 'flex';
             resetEmail.value = emailInput.value;
         });
-        closeResetModal.addEventListener('click', () => { resetModal.style.display = 'none'; });
+
+        closeResetModal.addEventListener('click', () => {
+            resetModal.style.display = 'none';
+        });
+
         sendResetBtn.addEventListener('click', async () => {
             const email = resetEmail.value.trim();
             if (!esEmail(email)) {
@@ -729,15 +604,6 @@
             }
         });
 
-        // ================== RECORDAR EMAIL ==================
-        window.addEventListener('load', () => {
-            const remembered = localStorage.getItem('rememberedEmail');
-            if (remembered) {
-                emailInput.value = remembered;
-                document.getElementById('pwInput').focus();
-            }
-        });
-
         // ================== SESIÓN EXISTENTE ==================
         sb.auth.getSession().then(({ data: { session } }) => {
             if (session) {
@@ -751,7 +617,6 @@
         });
 
         limpiarMensajes();
-        setRandomPhrase();
     </script>
 </body>
 </html>
