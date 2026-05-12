@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shadow Garden — Autenticación</title>
     <style>
-        /* ========== ESTILOS ACGN-LOGIN (adaptados) ========== */
         :root {
             --bg: #070510;
             --red: #c0001a;
@@ -35,21 +34,45 @@
             overflow: hidden;
         }
 
-        /* Fondo anime */
+        /* Fondo anime con animación de zoom */
         .background {
-            width: 100%;
-            height: 100vh;
+            position: fixed;
+            inset: 0;
+            z-index: -1;
             background: url("login.jpg") no-repeat center;
             background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: bgFade 0.5s ease;
+            animation: bgZoom 20s ease-in-out infinite alternate;
         }
 
-        @keyframes bgFade {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes bgZoom {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.08);
+            }
+        }
+
+        /* Capa de superposición para mejorar legibilidad */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(to right,
+                    rgba(7, 5, 16, 0.6) 0%,
+                    rgba(7, 5, 16, 0.2) 100%);
+        }
+
+        /* Contenedor principal */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 8vw;
         }
 
         /* Panel de vidrio (login/registro) */
@@ -70,11 +93,11 @@
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateX(-30px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
 
@@ -157,10 +180,19 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-5px); }
-            60% { transform: translateX(5px); }
-            80% { transform: translateX(-3px); }
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-5px);
+            }
+            60% {
+                transform: translateX(5px);
+            }
+            80% {
+                transform: translateX(-3px);
+            }
         }
 
         .btn {
@@ -266,11 +298,18 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Ajustes responsive */
         @media (max-width: 500px) {
+            .main-container {
+                padding-left: 5vw;
+                padding-right: 5vw;
+                justify-content: center;
+            }
             .auth-panel {
                 padding: 30px 20px;
             }
@@ -279,7 +318,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="background">
+    <!-- Fondo animado -->
+    <div class="background"></div>
+    <div class="overlay"></div>
+
+    <div class="main-container">
         <div class="auth-panel">
             <div class="logo">Shadow Garden</div>
             <div class="subtitle">Sistema de autenticación</div>
@@ -290,7 +333,7 @@
                 <div class="tab" id="tabRegister">Registrarse</div>
             </div>
 
-            <!-- Login -->
+            <!-- Sección de Login -->
             <div class="form-section active" id="loginSection">
                 <div class="field">
                     <input type="email" id="emailInput" placeholder="Email" autocomplete="off">
@@ -311,7 +354,7 @@
                 </div>
             </div>
 
-            <!-- Registro -->
+            <!-- Sección de Registro -->
             <div class="form-section" id="registerSection">
                 <div class="field">
                     <input type="email" id="regEmail" placeholder="Email" autocomplete="off">
@@ -332,7 +375,7 @@
         </div>
     </div>
 
-    <!-- Modal para recuperar contraseña (estilo ACGN) -->
+    <!-- Modal para recuperar contraseña -->
     <div id="resetModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); justify-content:center; align-items:center; z-index:1000;">
         <div style="background: rgba(10,5,20,0.95); border:1px solid rgba(255,255,255,0.2); border-radius:16px; padding:30px; width:90%; max-width:380px; color:white; text-align:center;">
             <h3 style="font-family:'Cinzel',serif; margin-bottom:15px;">Recuperar acceso</h3>
@@ -532,7 +575,7 @@
         document.getElementById('forgotLink').addEventListener('click', (e) => {
             e.preventDefault();
             resetModal.style.display = 'flex';
-            resetEmail.value = emailInput.value; // pre-rellenar
+            resetEmail.value = emailInput.value;
         });
 
         closeResetModal.addEventListener('click', () => {
@@ -573,7 +616,6 @@
             }
         });
 
-        // ================== LIMPIEZA INICIAL ==================
         limpiarMensajes();
     </script>
 </body>
