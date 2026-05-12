@@ -35,7 +35,6 @@
             color: var(--text);
         }
 
-        /* Fondos */
         .bg-art {
             position: fixed;
             inset: 0;
@@ -123,7 +122,6 @@
             background: radial-gradient(ellipse at center, transparent 40%, rgba(80, 0, 10, 0.45) 100%);
         }
 
-        /* Escenario */
         .stage {
             position: relative;
             z-index: 10;
@@ -133,7 +131,7 @@
             padding: 20px 16px;
         }
 
-        /* Personaje Shadow */
+        /* ─── PERSONAJE SHADOW ─── */
         .cid-wrap {
             position: fixed;
             right: -10px;
@@ -145,7 +143,7 @@
             pointer-events: none;
             transition: transform .6s cubic-bezier(.34, 1.2, .64, 1), filter .4s ease;
             transform-origin: bottom right;
-            filter: drop-shadow(0 0 12px rgba(155, 48, 255, 0.35)) drop-shadow(0 0 25px rgba(192, 0, 26, 0.2));
+            filter: drop-shadow(0 0 12px rgba(155, 48, 255, 0.45)) drop-shadow(0 0 25px rgba(192, 0, 26, 0.3));
         }
         .cid-wrap.idle {
             animation: cidFloat 4s ease-in-out infinite;
@@ -215,7 +213,7 @@
             transform: translateX(-50%);
             width: 85%;
             height: 180px;
-            background: radial-gradient(ellipse at bottom, rgba(155, 48, 255, 0.55) 0%, rgba(74, 0, 128, 0.15) 35%, transparent 70%);
+            background: radial-gradient(ellipse at bottom, rgba(200, 0, 30, 0.5) 0%, rgba(74, 0, 128, 0.2) 35%, transparent 70%);
             filter: blur(18px);
             animation: auraBreath 2.4s ease-in-out infinite, auraHue 5s ease infinite alternate;
         }
@@ -232,10 +230,10 @@
         }
         @keyframes auraHue {
             0% {
-                background: radial-gradient(ellipse at bottom, rgba(155, 48, 255, 0.55) 0%, rgba(74, 0, 128, 0.15) 35%, transparent 70%);
+                background: radial-gradient(ellipse at bottom, rgba(200, 0, 30, 0.5) 0%, rgba(74, 0, 128, 0.2) 35%, transparent 70%);
             }
             100% {
-                background: radial-gradient(ellipse at bottom, rgba(192, 0, 26, 0.4) 0%, rgba(155, 48, 255, 0.2) 35%, transparent 70%);
+                background: radial-gradient(ellipse at bottom, rgba(90, 0, 180, 0.55) 0%, rgba(192, 0, 26, 0.25) 35%, transparent 70%);
             }
         }
         .cid-svg {
@@ -243,7 +241,6 @@
             height: 100%;
         }
 
-        /* Burbuja de diálogo */
         .speech-bubble {
             position: fixed;
             right: calc(50vw + 20px);
@@ -280,7 +277,6 @@
             transform: rotate(45deg);
         }
 
-        /* Tarjeta */
         .card {
             width: 100%;
             max-width: 370px;
@@ -343,7 +339,6 @@
             }
         }
 
-        /* Logo */
         .logo-wrap {
             text-align: center;
             margin-bottom: 24px;
@@ -382,7 +377,6 @@
             margin-top: 3px;
         }
 
-        /* Pestañas */
         .tabs {
             display: flex;
             margin-bottom: 22px;
@@ -407,7 +401,6 @@
             border-bottom-color: var(--red-glow);
         }
 
-        /* Campos */
         .field {
             margin-bottom: 16px;
             opacity: 0;
@@ -526,7 +519,6 @@
             transition: width .4s ease, background .4s ease;
         }
 
-        /* Mensajes */
         .msg {
             border-radius: 5px;
             padding: 8px 12px;
@@ -557,7 +549,6 @@
             }
         }
 
-        /* Extras */
         .extras {
             display: flex;
             align-items: center;
@@ -595,7 +586,6 @@
             opacity: .7;
         }
 
-        /* Botones */
         .btn-main {
             width: 100%;
             padding: 12px;
@@ -754,7 +744,6 @@
             text-decoration: none;
         }
 
-        /* Sección de registro */
         .reg-section {
             display: none;
         }
@@ -792,7 +781,6 @@
             box-shadow: 0 0 0 3px rgba(192, 0, 26, .1);
         }
 
-        /* Confeti */
         .confetti-wrap {
             position: fixed;
             inset: 0;
@@ -817,7 +805,6 @@
             }
         }
 
-        /* Tema */
         .theme-btn {
             position: fixed;
             top: 14px;
@@ -840,7 +827,6 @@
             transform: scale(1.1) rotate(15deg);
         }
 
-        /* Modales */
         .modal-overlay {
             display: none;
             opacity: 0;
@@ -1006,36 +992,41 @@
     <div class="confetti-wrap" id="confWrap"></div>
     <button class="theme-btn" id="themeBtn">☀️</button>
 
-    <!-- Personaje Shadow (rediseñado) -->
+    <!-- PERSONAJE SHADOW (refinado) -->
     <div class="cid-wrap idle" id="cidWrap">
         <div class="cid-aura"></div>
-        <svg class="cid-svg" viewBox="0 0 300 580" xmlns="http://www.w3.org/2000/svg">
+        <svg class="cid-svg" viewBox="0 0 300 600" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <!-- Filtro de brillo para ojos y detalles -->
+                <!-- Filtro de brillo carmesí para los ojos -->
                 <filter id="glow">
-                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                    <feGaussianBlur stdDeviation="4.5" result="coloredBlur"/>
                     <feMerge>
                         <feMergeNode in="coloredBlur"/>
                         <feMergeNode in="SourceGraphic"/>
                     </feMerge>
                 </filter>
-
+                <!-- Filtro para la capa -->
+                <filter id="capeFilter">
+                    <feGaussianBlur stdDeviation="2" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
                 <!-- Material del traje de slime -->
                 <linearGradient id="slimeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stop-color="#1a1a2e"/>
-                    <stop offset="30%" stop-color="#0d0d1a"/>
-                    <stop offset="70%" stop-color="#111122"/>
+                    <stop offset="35%" stop-color="#0d0d1a"/>
+                    <stop offset="65%" stop-color="#111122"/>
                     <stop offset="100%" stop-color="#1a1a2e"/>
                 </linearGradient>
-
-                <!-- Efecto dorado para ribetes -->
+                <!-- Ribetes dorados -->
                 <linearGradient id="goldTrim" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#b8860b"/>
                     <stop offset="50%" stop-color="#ffd700"/>
                     <stop offset="100%" stop-color="#b8860b"/>
                 </linearGradient>
-
-                <!-- Efecto púrpura para ribetes -->
+                <!-- Ribetes púrpura -->
                 <linearGradient id="purpleTrim" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#4a0080"/>
                     <stop offset="50%" stop-color="#9b30ff"/>
@@ -1043,125 +1034,126 @@
                 </linearGradient>
             </defs>
 
-            <!-- CAPA (hooded trench coat) - Negra con exterior texturizado -->
-            <path d="M 52 195 Q 18 300 8 425 Q 3 505 35 558 Q 72 590 150 595 Q 228 590 265 558 Q 297 505 292 425 Q 282 300 248 195 Z" fill="url(#slimeGrad)" stroke="#1a1a2e" stroke-width="2"/>
+            <!-- SOMBRA EN EL SUELO -->
+            <ellipse cx="150" cy="590" rx="95" ry="16" fill="rgba(180, 0, 50, 0.2)" filter="url(#glow)">
+                <animate attributeName="rx" values="95;100;95" dur="3s" repeatCount="indefinite"/>
+            </ellipse>
+
+            <!-- CAPA EXTERIOR (hooded trench coat) -->
+            <path d="M 48 185 Q 12 300 4 430 Q -2 510 32 570 Q 68 600 150 605 Q 232 600 268 570 Q 302 510 296 430 Q 288 300 252 185 Z" fill="url(#slimeGrad)" stroke="#0d0d1a" stroke-width="2" filter="url(#capeFilter)"/>
             <!-- Pliegues internos de la capa -->
-            <path d="M 90 210 Q 75 320 68 430 Q 62 508 98 552" stroke="rgba(184, 134, 11, 0.15)" stroke-width="1.8" fill="none"/>
-            <path d="M 210 210 Q 225 320 232 430 Q 238 508 202 552" stroke="rgba(155, 48, 255, 0.15)" stroke-width="1.8" fill="none"/>
-            <!-- Bordes dorados en el borde de la capa -->
-            <path d="M 86 560 Q 120 578 150 580 Q 180 578 214 560" stroke="url(#goldTrim)" stroke-width="1.8" fill="none" opacity="0.7"/>
-            <path d="M 74 568 Q 100 582 150 584 Q 200 582 226 568" stroke="url(#goldTrim)" stroke-width="0.8" fill="none" opacity="0.4"/>
+            <path d="M 86 200 Q 70 320 64 435 Q 58 515 94 562" stroke="rgba(184, 134, 11, 0.15)" stroke-width="2" fill="none"/>
+            <path d="M 214 200 Q 230 320 236 435 Q 242 515 206 562" stroke="rgba(155, 48, 255, 0.18)" stroke-width="2" fill="none"/>
+            <!-- Borde dorado inferior de la capa -->
+            <path d="M 82 568 Q 118 588 150 590 Q 182 588 218 568" stroke="url(#goldTrim)" stroke-width="2.2" fill="none" opacity="0.75"/>
+            <path d="M 68 576 Q 100 592 150 594 Q 200 592 232 576" stroke="url(#goldTrim)" stroke-width="1" fill="none" opacity="0.4"/>
 
             <!-- CUERPO (Slime Bodysuit) -->
-            <rect x="116" y="168" width="68" height="98" rx="12" fill="url(#slimeGrad)" stroke="#0d0d1a" stroke-width="1"/>
-            <!-- Línea central del traje (costura) -->
-            <line x1="150" y1="175" x2="150" y2="255" stroke="rgba(184, 134, 11, 0.15)" stroke-width="1.5"/>
+            <rect x="116" y="168" width="68" height="102" rx="14" fill="url(#slimeGrad)" stroke="#0d0d1a" stroke-width="1.5"/>
+            <!-- Costura central -->
+            <line x1="150" y1="175" x2="150" y2="262" stroke="rgba(184, 134, 11, 0.12)" stroke-width="1.5"/>
             <!-- Cuello alto (popped collar) -->
-            <path d="M 120 168 Q 150 155 180 168" fill="none" stroke="url(#goldTrim)" stroke-width="3" opacity="0.8"/>
-            <path d="M 123 172 Q 150 160 177 172" fill="none" stroke="url(#purpleTrim)" stroke-width="1.8" opacity="0.6"/>
-            <!-- Detalle geométrico en el pecho (Shadow Garden) -->
-            <polygon points="150,190 140,200 150,210 160,200" fill="none" stroke="url(#goldTrim)" stroke-width="1.2" opacity="0.7"/>
+            <path d="M 118 166 Q 150 152 182 166" fill="none" stroke="url(#goldTrim)" stroke-width="3.5" opacity="0.85"/>
+            <path d="M 121 170 Q 150 157 179 170" fill="none" stroke="url(#purpleTrim)" stroke-width="2" opacity="0.65"/>
+            <!-- Símbolo de Shadow Garden en el pecho -->
+            <polygon points="150,190 138,202 150,214 162,202" fill="none" stroke="url(#goldTrim)" stroke-width="1.5" opacity="0.75"/>
             <!-- Ribetes dorados en hombros -->
-            <path d="M 116 175 Q 108 180 116 190" fill="none" stroke="url(#goldTrim)" stroke-width="2" opacity="0.8"/>
-            <path d="M 184 175 Q 192 180 184 190" fill="none" stroke="url(#goldTrim)" stroke-width="2" opacity="0.8"/>
+            <path d="M 116 175 Q 106 182 116 192" fill="none" stroke="url(#goldTrim)" stroke-width="2.2" opacity="0.85"/>
+            <path d="M 184 175 Q 194 182 184 192" fill="none" stroke="url(#goldTrim)" stroke-width="2.2" opacity="0.85"/>
             <!-- Cinturón -->
-            <rect x="116" y="240" width="68" height="6" rx="2" fill="#0d0d1a" stroke="url(#goldTrim)" stroke-width="0.8" opacity="0.6"/>
+            <rect x="116" y="244" width="68" height="7" rx="2" fill="#0d0d1a" stroke="url(#goldTrim)" stroke-width="1" opacity="0.65"/>
 
             <!-- CUELLO (visible sobre el traje) -->
-            <rect x="138" y="142" width="24" height="28" rx="6" fill="#130f25"/>
+            <rect x="136" y="140" width="28" height="30" rx="7" fill="#130f25"/>
 
-            <!-- CABEZA (rostro genérico, parcialmente oculto) -->
-            <ellipse cx="150" cy="118" rx="40" ry="44" fill="#18122e"/>
-            <ellipse cx="150" cy="120" rx="34" ry="39" fill="#f4e6d2" opacity="0.92"/>
+            <!-- CABEZA -->
+            <ellipse cx="150" cy="116" rx="42" ry="46" fill="#18122e"/>
+            <ellipse cx="150" cy="118" rx="36" ry="41" fill="#f4e6d2" opacity="0.94"/>
 
-            <!-- CAPUCHA (hood, cubre la mitad superior) -->
-            <path d="M 105 98 Q 95 65 105 38 Q 115 18 135 28 Q 128 48 130 68" fill="#0d0d1a"/>
-            <path d="M 195 98 Q 205 65 195 38 Q 185 18 165 28 Q 172 48 170 68" fill="#0d0d1a"/>
-            <path d="M 108 90 Q 98 55 108 35 Q 118 15 138 22 Q 132 42 134 62" fill="#0d0d1a"/>
-            <path d="M 192 90 Q 202 55 192 35 Q 182 15 162 22 Q 168 42 166 62" fill="#0d0d1a"/>
+            <!-- CAPUCHA PROFUNDA (hood que oculta la parte superior del rostro) -->
+            <path d="M 102 96 Q 92 62 102 34 Q 112 12 134 24 Q 126 44 128 66" fill="#0d0d1a"/>
+            <path d="M 198 96 Q 208 62 198 34 Q 188 12 166 24 Q 174 44 172 66" fill="#0d0d1a"/>
+            <path d="M 106 88 Q 96 52 106 32 Q 116 10 140 20 Q 132 40 134 60" fill="#0d0d1a"/>
+            <path d="M 194 88 Q 204 52 194 32 Q 184 10 160 20 Q 168 40 166 60" fill="#0d0d1a"/>
             <!-- Borde dorado de la capucha -->
-            <path d="M 103 95 Q 91 62 101 38 Q 111 15 131 25" fill="none" stroke="url(#goldTrim)" stroke-width="1.5" opacity="0.8"/>
-            <path d="M 197 95 Q 209 62 199 38 Q 189 15 169 25" fill="none" stroke="url(#goldTrim)" stroke-width="1.5" opacity="0.8"/>
+            <path d="M 100 92 Q 88 58 98 34 Q 108 10 132 22" fill="none" stroke="url(#goldTrim)" stroke-width="1.8" opacity="0.85"/>
+            <path d="M 200 92 Q 212 58 202 34 Q 192 10 168 22" fill="none" stroke="url(#goldTrim)" stroke-width="1.8" opacity="0.85"/>
 
-            <!-- CEJAS (ocultas bajo la capucha, solo se intuyen) -->
-            <path d="M 119 108 Q 130 104 138 107" stroke="#12102a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <path d="M 162 107 Q 170 104 181 108" stroke="#12102a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <!-- CEJAS (apenas visibles bajo la capucha) -->
+            <path d="M 117 106 Q 130 102 140 105" stroke="#12102a" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+            <path d="M 160 105 Q 170 102 183 106" stroke="#12102a" stroke-width="2.8" stroke-linecap="round" fill="none"/>
 
-            <!-- OJOS (rojos brillantes, característicos de Shadow) -->
-            <ellipse cx="131" cy="119" rx="10.5" ry="8.5" fill="#080320"/>
-            <ellipse cx="131" cy="119" rx="8" ry="6.5" fill="#1a0010"/>
-            <ellipse id="eIL" cx="131" cy="119" rx="5.5" ry="5" fill="#440011"/>
-            <ellipse id="ePL" cx="131" cy="119" rx="3" ry="3" fill="#ff0022"/>
-            <circle id="pupilL" cx="133" cy="117" r="1.4" fill="white" opacity="0.9"/>
-            <ellipse cx="131" cy="119" rx="9" ry="7" fill="url(#glow)" filter="url(#glow)" opacity="0.8"/>
+            <!-- OJO IZQUIERDO (carmesí brillante) -->
+            <ellipse cx="131" cy="117" rx="11" ry="9" fill="#080320"/>
+            <ellipse cx="131" cy="117" rx="8.5" ry="7" fill="#1a0010"/>
+            <ellipse id="eIL" cx="131" cy="117" rx="5.8" ry="5.2" fill="#440011"/>
+            <ellipse id="ePL" cx="131" cy="117" rx="3.2" ry="3.2" fill="#ff0033"/>
+            <circle id="pupilL" cx="133" cy="115" r="1.6" fill="white" opacity="0.95"/>
+            <ellipse cx="131" cy="117" rx="9.5" ry="7.5" fill="url(#glow)" filter="url(#glow)" opacity="0.85"/>
 
-            <ellipse cx="169" cy="119" rx="10.5" ry="8.5" fill="#080320"/>
-            <ellipse cx="169" cy="119" rx="8" ry="6.5" fill="#1a0010"/>
-            <ellipse id="eIR" cx="169" cy="119" rx="5.5" ry="5" fill="#440011"/>
-            <ellipse id="ePR" cx="169" cy="119" rx="3" ry="3" fill="#ff0022"/>
-            <circle id="pupilR" cx="171" cy="117" r="1.4" fill="white" opacity="0.9"/>
-            <ellipse cx="169" cy="119" rx="9" ry="7" fill="url(#glow)" filter="url(#glow)" opacity="0.8"/>
+            <!-- OJO DERECHO (carmesí brillante) -->
+            <ellipse cx="169" cy="117" rx="11" ry="9" fill="#080320"/>
+            <ellipse cx="169" cy="117" rx="8.5" ry="7" fill="#1a0010"/>
+            <ellipse id="eIR" cx="169" cy="117" rx="5.8" ry="5.2" fill="#440011"/>
+            <ellipse id="ePR" cx="169" cy="117" rx="3.2" ry="3.2" fill="#ff0033"/>
+            <circle id="pupilR" cx="171" cy="115" r="1.6" fill="white" opacity="0.95"/>
+            <ellipse cx="169" cy="117" rx="9.5" ry="7.5" fill="url(#glow)" filter="url(#glow)" opacity="0.85"/>
 
-            <!-- PÁRPADOS (para animaciones de parpadeo y cubrir) -->
-            <ellipse id="lidL" cx="131" cy="111" rx="10.5" ry="8.5" fill="#f4e6d2" opacity="0" style="transition:opacity .25s,cy .25s;"/>
-            <ellipse id="lidR" cx="169" cy="111" rx="10.5" ry="8.5" fill="#f4e6d2" opacity="0" style="transition:opacity .25s,cy .25s;"/>
+            <!-- PÁRPADOS (para parpadeo y ojos cubiertos) -->
+            <ellipse id="lidL" cx="131" cy="109" rx="11" ry="9" fill="#f4e6d2" opacity="0" style="transition:opacity .25s,cy .25s;"/>
+            <ellipse id="lidR" cx="169" cy="109" rx="11" ry="9" fill="#f4e6d2" opacity="0" style="transition:opacity .25s,cy .25s;"/>
 
-            <!-- NARIZ (apenas visible) -->
-            <path d="M 147 128 Q 150 132 153 128" stroke="rgba(90,70,55,0.4)" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <!-- NARIZ -->
+            <path d="M 146 126 Q 150 130 154 126" stroke="rgba(90,70,55,0.45)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
 
-            <!-- BOCA (sonrisa enigmática característica) -->
-            <path id="cidMouth" d="M 140 139 Q 151 145 162 139" stroke="rgba(75,55,45,0.7)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <!-- BOCA (sonrisa enigmática) -->
+            <path id="cidMouth" d="M 139 137 Q 151 143 163 137" stroke="rgba(75,55,45,0.75)" stroke-width="1.6" stroke-linecap="round" fill="none"/>
 
             <!-- BRAZOS (cubiertos por el traje de slime) -->
-            <path d="M 116 188 Q 90 212 85 252 Q 82 272 88 287 Q 96 297 105 277 Q 110 258 115 228" fill="url(#slimeGrad)" stroke="url(#goldTrim)" stroke-width="1" opacity="0.6"/>
-            <path d="M 184 188 Q 210 212 215 252 Q 218 272 212 287 Q 204 297 195 277 Q 190 258 185 228" fill="url(#slimeGrad)" stroke="url(#goldTrim)" stroke-width="1" opacity="0.6"/>
+            <path d="M 116 188 Q 88 214 84 256 Q 80 278 86 294 Q 95 305 105 284 Q 110 264 115 232" fill="url(#slimeGrad)" stroke="url(#goldTrim)" stroke-width="1.2" opacity="0.7"/>
+            <path d="M 184 188 Q 212 214 216 256 Q 220 278 214 294 Q 205 305 195 284 Q 190 264 185 232" fill="url(#slimeGrad)" stroke="url(#goldTrim)" stroke-width="1.2" opacity="0.7"/>
 
-            <!-- GUANTES (negros con detalle dorado) -->
-            <ellipse cx="88" cy="290" rx="14" ry="12" fill="#0d0d1a" stroke="url(#goldTrim)" stroke-width="1"/>
-            <ellipse cx="88" cy="290" rx="10" ry="8" fill="#111122"/>
-            <ellipse cx="212" cy="290" rx="14" ry="12" fill="#0d0d1a" stroke="url(#goldTrim)" stroke-width="1"/>
-            <ellipse cx="212" cy="290" rx="10" ry="8" fill="#111122"/>
+            <!-- GUANTES NEGROS CON DETALLE DORADO -->
+            <ellipse cx="86" cy="298" rx="15" ry="13" fill="#0d0d1a" stroke="url(#goldTrim)" stroke-width="1.2"/>
+            <ellipse cx="86" cy="298" rx="11" ry="9" fill="#111122"/>
+            <ellipse cx="214" cy="298" rx="15" ry="13" fill="#0d0d1a" stroke="url(#goldTrim)" stroke-width="1.2"/>
+            <ellipse cx="214" cy="298" rx="11" ry="9" fill="#111122"/>
 
-            <!-- BOTAS (altas, negras con ribete dorado/púrpura) -->
-            <path d="M 116 260 L 112 290 Q 112 300 120 302 L 150 305 L 180 302 Q 188 300 188 290 L 184 260 Z" fill="#0d0d1a" stroke="url(#goldTrim)" stroke-width="0.8"/>
-            <path d="M 116 270 L 184 270" stroke="url(#purpleTrim)" stroke-width="1.2" opacity="0.6"/>
+            <!-- BOTAS ALTAS NEGRAS -->
+            <path d="M 116 264 L 110 298 Q 110 310 120 312 L 150 315 L 180 312 Q 190 310 190 298 L 184 264 Z" fill="#0d0d1a" stroke="url(#goldTrim)" stroke-width="1"/>
+            <path d="M 116 276 L 184 276" stroke="url(#purpleTrim)" stroke-width="1.4" opacity="0.7"/>
 
-            <!-- PARTÍCULAS DE SLIME MÁGICO -->
-            <circle cx="65" cy="310" r="3" fill="#9b30ff" opacity="0.7">
-                <animate attributeName="cy" values="310;270;310" dur="2.2s" repeatCount="indefinite"/>
-                <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.2s" repeatCount="indefinite"/>
+            <!-- PARTÍCULAS MÁGICAS (slime púrpura y dorado) -->
+            <circle cx="60" cy="320" r="3.5" fill="#9b30ff" opacity="0.75">
+                <animate attributeName="cy" values="320;275;320" dur="2.2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.5;0.95;0.5" dur="2.2s" repeatCount="indefinite"/>
             </circle>
-            <circle cx="235" cy="260" r="2.2" fill="#ffd700" opacity="0.8">
-                <animate attributeName="cy" values="260;225;260" dur="2.7s" repeatCount="indefinite"/>
+            <circle cx="240" cy="265" r="2.5" fill="#ffd700" opacity="0.85">
+                <animate attributeName="cy" values="265;225;265" dur="2.7s" repeatCount="indefinite"/>
                 <animate attributeName="opacity" values="0.6;1;0.6" dur="2.7s" repeatCount="indefinite"/>
             </circle>
-            <circle cx="50" cy="400" r="4" fill="#9b30ff" opacity="0.3">
-                <animate attributeName="cy" values="400;360;400" dur="3.2s" repeatCount="indefinite"/>
+            <circle cx="45" cy="420" r="4.5" fill="#9b30ff" opacity="0.35">
+                <animate attributeName="cy" values="420;370;420" dur="3.2s" repeatCount="indefinite"/>
             </circle>
-            <circle cx="245" cy="375" r="2.5" fill="#ffd700" opacity="0.4">
-                <animate attributeName="cy" values="375;345;375" dur="1.9s" repeatCount="indefinite"/>
+            <circle cx="255" cy="390" r="3" fill="#ffd700" opacity="0.45">
+                <animate attributeName="cy" values="390;350;390" dur="1.9s" repeatCount="indefinite"/>
             </circle>
-            <circle cx="120" cy="350" r="1.8" fill="#ffd700" opacity="0.5">
-                <animate attributeName="cy" values="350;300;350" dur="3.6s" repeatCount="indefinite"/>
+            <circle cx="115" cy="360" r="2.2" fill="#ffd700" opacity="0.55">
+                <animate attributeName="cy" values="360;305;360" dur="3.6s" repeatCount="indefinite"/>
                 <animate attributeName="opacity" values="0.5;1;0.5" dur="3.6s" repeatCount="indefinite"/>
             </circle>
-            <circle cx="180" cy="390" r="2" fill="#9b30ff" opacity="0.4">
-                <animate attributeName="cy" values="390;340;390" dur="4.1s" repeatCount="indefinite"/>
+            <circle cx="185" cy="400" r="2.5" fill="#9b30ff" opacity="0.45">
+                <animate attributeName="cy" values="400;345;400" dur="4.1s" repeatCount="indefinite"/>
                 <animate attributeName="opacity" values="0.4;0.9;0.4" dur="4.1s" repeatCount="indefinite"/>
             </circle>
 
-            <!-- ONDAS DE PODER MÁGICO -->
-            <path d="M 28 460 Q 8 490 22 520 Q 38 550 18 578" stroke="rgba(155, 48, 255, 0.6)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.4">
-                <animate attributeName="d" values="M 28 460 Q 8 490 22 520 Q 38 550 18 578;M 28 460 Q 12 485 20 518 Q 34 552 14 576;M 28 460 Q 8 490 22 520 Q 38 550 18 578" dur="3.2s" repeatCount="indefinite"/>
+            <!-- ONDAS DE PODER MÁGICO (rojo y púrpura) -->
+            <path d="M 24 470 Q 2 505 18 540 Q 36 572 14 598" stroke="rgba(200, 0, 30, 0.6)" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0.45">
+                <animate attributeName="d" values="M 24 470 Q 2 505 18 540 Q 36 572 14 598;M 24 470 Q 8 498 16 536 Q 32 570 10 596;M 24 470 Q 2 505 18 540 Q 36 572 14 598" dur="3.2s" repeatCount="indefinite"/>
             </path>
-            <path d="M 272 460 Q 292 490 278 520 Q 262 550 282 578" stroke="rgba(184, 134, 11, 0.5)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.4">
-                <animate attributeName="d" values="M 272 460 Q 292 490 278 520 Q 262 550 282 578;M 272 460 Q 288 485 280 518 Q 266 552 286 576;M 272 460 Q 292 490 278 520 Q 262 550 282 578" dur="3.8s" repeatCount="indefinite"/>
+            <path d="M 276 470 Q 298 505 282 540 Q 264 572 286 598" stroke="rgba(155, 48, 255, 0.55)" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0.45">
+                <animate attributeName="d" values="M 276 470 Q 298 505 282 540 Q 264 572 286 598;M 276 470 Q 292 498 284 536 Q 268 570 290 596;M 276 470 Q 298 505 282 540 Q 264 572 286 598" dur="3.8s" repeatCount="indefinite"/>
             </path>
-
-            <!-- MANTO DE SOMBRAS (efecto de aura oscura) -->
-            <ellipse cx="150" cy="580" rx="90" ry="15" fill="rgba(155, 48, 255, 0.25)" filter="url(#glow)">
-                <animate attributeName="rx" values="90;95;90" dur="3s" repeatCount="indefinite"/>
-            </ellipse>
         </svg>
     </div>
 
@@ -1180,7 +1172,6 @@
                 <div class="tab" id="tabRegister" onclick="switchTab('register')">Registro</div>
             </div>
 
-            <!-- LOGIN -->
             <div class="reg-section active" id="loginSection">
                 <div class="field" id="f1">
                     <div class="field-label">Email</div>
@@ -1220,7 +1211,6 @@
                 <p class="signup-link" id="signupEl">¿No tienes cuenta? <a href="#" id="registerLink">Regístrate</a></p>
             </div>
 
-            <!-- REGISTER -->
             <div class="reg-section" id="registerSection">
                 <div class="modal-field">
                     <label>Email</label>
@@ -1242,7 +1232,6 @@
         </div>
     </div>
 
-    <!-- Modal de recuperación -->
     <div class="modal-overlay" id="resetModal">
         <div class="modal-box">
             <button class="modal-close-btn" id="resetClose">✕</button>
@@ -1257,7 +1246,6 @@
         </div>
     </div>
 
-    <!-- Modal de nombre de usuario -->
     <div class="modal-overlay" id="usernameModal">
         <div class="modal-box">
             <span class="modal-emoji">👤</span>
@@ -1279,7 +1267,6 @@
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10ZmZqd2F5Ymt0cHdiYXZzdm9hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNzQ2MzksImV4cCI6MjA5Mzk1MDYzOX0.2qEw2rHe7h3o5RASSncT6w0QI9wCNYKr_mMmmszkFHI'
         );
 
-        // Tema
         const themeBtn = document.getElementById('themeBtn');
         let isLight = localStorage.getItem('gz_theme') === 'light';
         function applyTheme() { document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
@@ -1289,7 +1276,6 @@
             localStorage.setItem('gz_theme', isLight ? 'light' : 'dark');
             applyTheme(); });
 
-        // Partículas de fondo
         (function() { const c = document.getElementById('bgP'); for (let i = 0; i < 18; i++) { const p = document.createElement(
                     'div');
                 p.className = 'bg-particle'; const s = 4 + Math.random() * 12;
@@ -1297,23 +1283,20 @@
                     `width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${6+Math.random()*10}s;animation-delay:${Math.random()*8}s;`;
                 c.appendChild(p); } })();
 
-        // Estado del personaje
         const cidWrap = document.getElementById('cidWrap');
         const cidMouth = document.getElementById('cidMouth');
         let cidState = 'idle',
             bubbleTimer;
-
         const MOUTHS = {
             neutral: 'M 139 129 Q 151 135 163 129',
-            smirk: 'M 141 127 Q 153 134 163 127',
-            smile: 'M 136 127 Q 151 139 166 127',
-            frown: 'M 139 133 Q 151 127 163 133',
-            open: 'M 141 127 Q 151 137 161 127 Q 151 119 141 127',
-            serious: 'M 140 130 Q 151 132 162 130',
+            smirk: 'M 141 125 Q 153 132 163 125',
+            smile: 'M 136 125 Q 151 137 166 125',
+            frown: 'M 139 131 Q 151 125 163 131',
+            open: 'M 141 125 Q 151 135 161 125 Q 151 117 141 125',
+            serious: 'M 140 128 Q 151 130 162 128',
         };
-
         const EYE_COLORS = {
-            normal: { pupil: '#ff0022' },
+            normal: { pupil: '#ff0033' },
             red: { pupil: '#ff0040' },
             green: { pupil: '#00ff88' },
         };
@@ -1330,17 +1313,13 @@
             const ll = document.getElementById('lidL'),
                 lr = document.getElementById('lidR');
             if (!ll || !lr) return;
-            if (closed) {
-                ll.setAttribute('cy', '119');
-                lr.setAttribute('cy', '119');
+            if (closed) { ll.setAttribute('cy', '117');
+                lr.setAttribute('cy', '117');
                 ll.setAttribute('opacity', '1');
-                lr.setAttribute('opacity', '1');
-            } else {
-                ll.setAttribute('cy', '111');
-                lr.setAttribute('cy', '111');
+                lr.setAttribute('opacity', '1'); } else { ll.setAttribute('cy', '109');
+                lr.setAttribute('cy', '109');
                 ll.setAttribute('opacity', '0');
-                lr.setAttribute('opacity', '0');
-            }
+                lr.setAttribute('opacity', '0'); }
         }
 
         function setCid(s) {
@@ -1375,89 +1354,61 @@
             }
         }
 
-        function randomBlink() {
-            if (cidState === 'idle' || cidState === 'peek') {
-                setLids(true);
-                setTimeout(() => setLids(false), 115);
-            }
-            setTimeout(randomBlink, 2200 + Math.random() * 4000);
-        }
+        function randomBlink() { if (cidState === 'idle' || cidState === 'peek') { setLids(true);
+                setTimeout(() => setLids(false), 115); }
+            setTimeout(randomBlink, 2200 + Math.random() * 4000); }
         setTimeout(randomBlink, 2500);
 
-        // Burbuja de diálogo
-        const PHRASES = {
-            idle: ["¿Listo para entrar?", "Las sombras te esperan…", "Shadow Garden vigila"],
-            peek: ["Vaya, escribiendo… 👀", "¿Eres un espía?", "Te estoy observando…"],
-            covering: ["¡No miro, no miro! 🙈", "Mis ojos están cerrados 😑"],
-            disgust: ["¡Acceso denegado! ⚔️", "Eso no funcionó…", "No eres digno… aún 😏"],
-            success: ["¡Bienvenido a las sombras! 😈", "Shadow Garden te recibe 🌑", "Sabía que eras de los nuestros"],
-        };
+        const PHRASES = { idle: ["¿Listo para entrar?", "Las sombras te esperan…", "Shadow Garden vigila"], peek: [
+                "Vaya, escribiendo… 👀", "¿Eres un espía?", "Te estoy observando…"
+            ], covering: ["¡No miro, no miro! 🙈", "Mis ojos están cerrados 😑"], disgust: [
+                "¡Acceso denegado! ⚔️", "Eso no funcionó…", "No eres digno… aún 😏"
+            ], success: ["¡Bienvenido a las sombras! 😈", "Shadow Garden te recibe 🌑",
+                "Sabía que eras de los nuestros"
+            ], };
 
-        function randomBubble(state) {
-            const arr = PHRASES[state] || PHRASES.idle;
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
+        function randomBubble(s) { const a = PHRASES[s] || PHRASES.idle; return a[Math.floor(Math.random() * a.length)]; }
 
-        function showBubble(txt) {
-            const b = document.getElementById('speechBubble');
+        function showBubble(txt) { const b = document.getElementById('speechBubble');
             b.textContent = txt;
             b.classList.add('show');
             clearTimeout(bubbleTimer);
-            bubbleTimer = setTimeout(() => b.classList.remove('show'), 3000);
-        }
+            bubbleTimer = setTimeout(() => b.classList.remove('show'), 3000); }
 
-        // Confeti
-        function createConfetti() {
-            const w = document.getElementById('confWrap');
-            w.innerHTML = '';
-            const cols = ['#c0001a', '#9b30ff', '#ffd166', '#00ff88', '#ffffff'];
-            for (let i = 0; i < 55; i++) {
-                const p = document.createElement('div');
-                p.className = 'conf-p';
-                const dur = 1.4 + Math.random() * 2,
+        function createConfetti() { const w = document.getElementById('confWrap');
+            w.innerHTML = ''; const cols = ['#c0001a', '#9b30ff', '#ffd166', '#00ff88', '#ffffff']; for (let i = 0; i <
+                55; i++) { const p = document.createElement('div');
+                p.className = 'conf-p'; const dur = 1.4 + Math.random() * 2,
                     delay = Math.random() * .6,
                     sz = 5 + Math.random() * 7;
                 p.style.cssText =
                     `left:${10+Math.random()*80}%;background:${cols[Math.floor(Math.random()*5)]};width:${sz}px;height:${sz}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${dur}s;animation-delay:${delay}s;`;
                 w.appendChild(p);
-                setTimeout(() => p.remove(), (dur + delay) * 1000 + 100);
-            }
-        }
+                setTimeout(() => p.remove(), (dur + delay) * 1000 + 100); } }
 
-        // Pestañas
-        function switchTab(t) {
-            document.querySelectorAll('.reg-section').forEach(s => s.classList.remove('active'));
+        function switchTab(t) { document.querySelectorAll('.reg-section').forEach(s => s.classList.remove(
+            'active'));
             document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
             document.getElementById(t + 'Section').classList.add('active');
-            document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('active');
-            if (t === 'login') { setCid('idle'); }
-            if (t === 'register') { setCid('peek');
-                showBubble(randomBubble('peek')); }
-        }
-
-        // Animaciones de carga
-        window.addEventListener('load', () => {
-            ['f1', 'f2', 'extrasEl', 'loginBtn', 'divEl', 'btnGoogle', 'signupEl'].forEach((id, i) => {
-                const el = document.getElementById(id);
-                if (el) setTimeout(() => el.classList.add('visible'), 280 + i * 80);
-            });
-            const rem = localStorage.getItem('rememberedEmail');
-            if (rem) { document.getElementById('emailInput').value = rem;
-                document.getElementById('rememberMe').checked = true; }
-        });
-
-        // Referencias
-        const emailInput = document.getElementById('emailInput');
-        const pwInput = document.getElementById('pwInput');
-        const loginBtn = document.getElementById('loginBtn');
-        const btnGoogle = document.getElementById('btnGoogle');
-        const errorMsg = document.getElementById('errorMsg');
-        const successMsg = document.getElementById('successMsg');
-        const forgotLink = document.getElementById('forgotLink');
-        const registerLink = document.getElementById('registerLink');
-        const rememberMe = document.getElementById('rememberMe');
-        const pwBar = document.getElementById('pwBar');
-        const pwFill = document.getElementById('pwFill');
+            document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('active'); if (t ===
+                'login') { setCid('idle'); } if (t === 'register') { setCid('peek');
+                showBubble(randomBubble('peek')); } }
+        window.addEventListener('load', () => { ['f1', 'f2', 'extrasEl', 'loginBtn', 'divEl', 'btnGoogle', 'signupEl']
+                .forEach((id, i) => { const el = document.getElementById(id); if (el) setTimeout(() => el.classList.add(
+                        'visible'), 280 + i * 80); }); const rem = localStorage.getItem('rememberedEmail'); if (
+                rem) { document.getElementById('emailInput').value = rem;
+                document.getElementById('rememberMe').checked = true; } });
+        const emailInput = document.getElementById('emailInput'),
+            pwInput = document.getElementById('pwInput'),
+            loginBtn = document.getElementById('loginBtn'),
+            btnGoogle = document.getElementById('btnGoogle'),
+            errorMsg = document.getElementById('errorMsg'),
+            successMsg = document.getElementById('successMsg'),
+            forgotLink = document.getElementById('forgotLink'),
+            registerLink = document.getElementById('registerLink'),
+            rememberMe = document.getElementById('rememberMe'),
+            pwBar = document.getElementById('pwBar'),
+            pwFill = document.getElementById('pwFill');
 
         function isEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
 
@@ -1474,106 +1425,70 @@
 
         function clearMsgs() { errorMsg.style.display = 'none';
             successMsg.style.display = 'none'; }
-
-        // Eventos de campo
         emailInput.addEventListener('focus', () => { setCid('peek');
             showBubble(randomBubble('peek')); });
         emailInput.addEventListener('blur', () => { if (document.activeElement !== pwInput) setCid('idle'); });
         emailInput.addEventListener('keypress', e => { if (e.key === 'Enter') pwInput.focus(); });
-
         let pwVisible = false;
-        pwInput.addEventListener('focus', () => {
-            if (pwVisible) { setCid('covering');
-                showBubble(randomBubble('covering')); } else { setCid('idle'); }
-        });
+        pwInput.addEventListener('focus', () => { if (pwVisible) { setCid('covering');
+                showBubble(randomBubble('covering')); } else { setCid('idle'); } });
         pwInput.addEventListener('blur', () => { if (document.activeElement !== emailInput) setCid('idle'); });
-        pwInput.addEventListener('input', () => {
-            const pw = pwInput.value;
-            pwBar.style.display = pw.length ? 'block' : 'none';
-            let s = 0; if (pw.length >= 6) s++; if (pw.length >= 10) s++; if (/[A-Z]/.test(pw)) s++; if (
-                /[0-9]/.test(pw)) s++; if (/[^a-zA-Z0-9]/.test(pw)) s++;
+        pwInput.addEventListener('input', () => { const pw = pwInput.value;
+            pwBar.style.display = pw.length ? 'block' : 'none'; let s = 0; if (pw.length >= 6) s++; if (pw.length >=
+                10) s++; if (/[A-Z]/.test(pw)) s++; if (/[0-9]/.test(pw)) s++; if (/[^a-zA-Z0-9]/.test(pw))
+            s++;
             pwFill.style.width = [20, 40, 60, 80, 100][Math.min(s, 4)] + '%';
             pwFill.style.background = ['#ff0028', '#ff6000', '#ffd166', '#00cc66', '#00ff88'][Math.min(s,
-            4)];
-        });
-
-        document.getElementById('togglePw').addEventListener('click', () => {
-            pwVisible = !pwVisible;
+            4)]; });
+        document.getElementById('togglePw').addEventListener('click', () => { pwVisible = !pwVisible;
             pwInput.type = pwVisible ? 'text' : 'password';
-            document.getElementById('togglePw').textContent = pwVisible ? '🙈' : '👁️';
-            if (pwVisible) { setCid('covering');
+            document.getElementById('togglePw').textContent = pwVisible ? '🙈' : '👁️'; if (pwVisible) { setCid(
+                    'covering');
                 showBubble(randomBubble('covering')); } else { setCid('idle');
-                showBubble('Ok, ya volví 😌'); }
-        });
-
+                showBubble('Ok, ya volví 😌'); } });
         pwInput.addEventListener('keypress', e => { if (e.key === 'Enter') loginBtn.click(); });
-
-        // Iniciar sesión
-        loginBtn.addEventListener('click', async () => {
-            const email = emailInput.value.trim(),
+        loginBtn.addEventListener('click', async () => { const email = emailInput.value.trim(),
                 pw = pwInput.value;
-            clearMsgs();
-            if (!email || !pw) { showErr('Completa todos los campos');
+            clearMsgs(); if (!email || !pw) { showErr('Completa todos los campos');
                 setCid('disgust');
                 showBubble(randomBubble('disgust'));
-                setTimeout(() => setCid('idle'), 2200); return; }
-            if (!isEmail(email)) { showErr('Correo inválido');
+                setTimeout(() => setCid('idle'), 2200); return; } if (!isEmail(email)) { showErr('Correo inválido');
                 setCid('disgust');
                 showBubble(randomBubble('disgust'));
                 setTimeout(() => setCid('idle'), 2200); return; }
             loginBtn.classList.add('loading');
             loginBtn.textContent = 'Verificando…';
-            setCid('idle');
-            try {
-                const { data, error } = await sb.auth.signInWithPassword({ email, password: pw });
-                if (error) throw error;
-                if (rememberMe.checked) localStorage.setItem('rememberedEmail', email);
-                else localStorage.removeItem('rememberedEmail');
+            setCid('idle'); try { const { data, error } = await sb.auth.signInWithPassword({ email, password: pw }); if (
+                    error) throw error; if (rememberMe.checked) localStorage.setItem('rememberedEmail',
+                email); else localStorage.removeItem('rememberedEmail');
                 loginBtn.classList.remove('loading');
                 loginBtn.classList.add('success');
                 loginBtn.textContent = '✓ ¡Acceso concedido!';
                 setCid('success');
                 showBubble(randomBubble('success'));
                 createConfetti();
-                setTimeout(() => window.location.href = 'dashboard.html', 1800);
-            } catch (err) {
+                setTimeout(() => window.location.href = 'dashboard.html', 1800); } catch (err) {
                 loginBtn.classList.remove('loading');
                 loginBtn.textContent = 'Ingresar';
                 setCid('disgust');
-                let msg = 'Credenciales incorrectas';
-                if (err.message) {
-                    if (err.message.includes('Email not confirmed')) msg = 'Confirma tu correo antes de entrar';
-                    else if (err.message.includes('Too many')) msg = 'Demasiados intentos';
-                    else if (err.message.includes('network') || err.message.includes('fetch')) msg =
-                        'Sin conexión a internet';
-                }
+                let msg = 'Credenciales incorrectas'; if (err.message) { if (err.message.includes(
+                        'Email not confirmed')) msg = 'Confirma tu correo antes de entrar'; else if (err
+                        .message.includes('Too many')) msg = 'Demasiados intentos'; else if (err
+                        .message.includes('network') || err.message.includes('fetch')) msg =
+                        'Sin conexión a internet'; }
                 showErr(msg);
                 showBubble('Acceso denegado ⚔️');
-                setTimeout(() => setCid('idle'), 2500);
-            }
-        });
-
-        // Google
-        btnGoogle.addEventListener('click', async () => {
-            btnGoogle.classList.add('loading');
+                setTimeout(() => setCid('idle'), 2500); } });
+        btnGoogle.addEventListener('click', async () => { btnGoogle.classList.add('loading');
             setCid('peek');
-            showBubble('Consultando a Google… 🔗');
-            try {
-                const { error } = await sb.auth.signInWithOAuth({
+            showBubble('Consultando a Google… 🔗'); try { const { error } = await sb.auth.signInWithOAuth({
                     provider: 'google',
-                    options: { redirectTo: 'https://shadowwarden098.github.io/Easy/dashboard.html' }
-                });
-                if (error) throw error;
-            } catch (err) {
-                btnGoogle.classList.remove('loading');
+                    options: { redirectTo: 'https://shadowwarden098.github.io/Easy/dashboard.html' } }); if (
+                    error) throw error; } catch (err) { btnGoogle.classList.remove('loading');
                 setCid('disgust');
                 showBubble('Error de conexión 😤');
                 showErr('Error al conectar con Google');
-                setTimeout(() => setCid('idle'), 2000);
-            }
-        });
-
-        // Restablecer contraseña
+                setTimeout(() => setCid('idle'), 2000); } });
         const resetModal = document.getElementById('resetModal');
         forgotLink.addEventListener('click', e => { e.preventDefault();
             openModal('resetModal');
@@ -1581,27 +1496,21 @@
             showBubble('¿Ya olvidaste? 😅'); });
         document.getElementById('resetClose').addEventListener('click', () => closeModal('resetModal'));
         document.getElementById('backToLogin').addEventListener('click', () => closeModal('resetModal'));
-        document.getElementById('resetEmail').addEventListener('input', function() {
-            const v = this.value.trim();
-            const h = document.getElementById('resetHint');
-            if (!v) { h.textContent = 'Ingresa tu correo registrado';
+        document.getElementById('resetEmail').addEventListener('input', function() { const v = this.value.trim(); const h =
+                document.getElementById('resetHint'); if (!v) { h.textContent = 'Ingresa tu correo registrado';
                 h.className = 'modal-hint'; } else if (isEmail(v)) { h.textContent = '✓ Correo válido';
                 h.className = 'modal-hint ok'; } else { h.textContent = '⚠ Formato inválido';
-                h.className = 'modal-hint err'; }
-        });
-        document.getElementById('resetBtn').addEventListener('click', async () => {
-            const email = document.getElementById('resetEmail').value.trim();
-            const hint = document.getElementById('resetHint'),
+                h.className = 'modal-hint err'; } });
+        document.getElementById('resetBtn').addEventListener('click', async () => { const email = document.getElementById(
+                    'resetEmail').value.trim(); const hint = document.getElementById('resetHint'),
                 btn = document.getElementById('resetBtn'),
-                ok = document.getElementById('resetSuccess');
-            if (!isEmail(email)) { hint.textContent = '⚠ Correo inválido';
+                ok = document.getElementById('resetSuccess'); if (!isEmail(email)) { hint.textContent =
+                    '⚠ Correo inválido';
                 hint.className = 'modal-hint err'; return; }
             btn.textContent = 'Enviando…';
             btn.classList.add('loading');
-            btn.disabled = true;
-            try {
-                const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://shadowwarden098.github.io/Easy/index.html' });
-                if (error) throw error;
+            btn.disabled = true; try { const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://shadowwarden098.github.io/Easy/index.html' }); if (
+                    error) throw error;
                 btn.classList.remove('loading');
                 ok.textContent = '✓ Enlace enviado a ' + email;
                 ok.style.display = 'block';
@@ -1609,133 +1518,99 @@
                 hint.style.display = 'none';
                 document.getElementById('resetEmail').disabled = true;
                 setCid('success');
-                showBubble('Revisa tu correo 📧');
-            } catch (err) { btn.classList.remove('loading');
+                showBubble('Revisa tu correo 📧'); } catch (err) { btn.classList.remove('loading');
                 btn.disabled = false;
                 btn.textContent = 'Enviar enlace 📧';
                 hint.textContent = '⚠ ' + (err.message || 'Error');
-                hint.className = 'modal-hint err'; }
-        });
-
-        // Registro
+                hint.className = 'modal-hint err'; } });
         registerLink.addEventListener('click', e => { e.preventDefault();
             switchTab('register'); });
-        document.getElementById('registerBtn').addEventListener('click', async () => {
-            const email = document.getElementById('regEmail').value.trim();
-            const pw = document.getElementById('regPw').value;
-            const pw2 = document.getElementById('regPw2').value;
-            const err = document.getElementById('regError'),
+        document.getElementById('registerBtn').addEventListener('click', async () => { const email = document
+                .getElementById('regEmail').value.trim(); const pw = document.getElementById('regPw').value; const pw2 =
+                document.getElementById('regPw2').value; const err = document.getElementById('regError'),
                 ok = document.getElementById('regSuccess'),
                 btn = document.getElementById('registerBtn');
             err.style.display = 'none';
-            ok.style.display = 'none';
-            if (!isEmail(email)) { err.textContent = '⚠ Correo inválido';
-                err.style.display = 'block'; return; }
-            if (pw.length < 6) { err.textContent = '⚠ Mínimo 6 caracteres';
-                err.style.display = 'block'; return; }
-            if (pw !== pw2) { err.textContent = '⚠ Las contraseñas no coinciden';
+            ok.style.display = 'none'; if (!isEmail(email)) { err.textContent = '⚠ Correo inválido';
+                err.style.display = 'block'; return; } if (pw.length < 6) { err.textContent =
+                '⚠ Mínimo 6 caracteres';
+                err.style.display = 'block'; return; } if (pw !== pw2) { err.textContent =
+                '⚠ Las contraseñas no coinciden';
                 err.style.display = 'block'; return; }
             btn.textContent = 'Creando…';
             btn.classList.add('loading');
             btn.disabled = true;
             setCid('peek');
-            showBubble('Creando tu identidad… 🌑');
-            try {
-                const { data, error } = await sb.auth.signUp({ email, password: pw });
+            showBubble('Creando tu identidad… 🌑'); try { const { data, error } = await sb.auth.signUp({ email,
+                    password: pw });
                 btn.classList.remove('loading');
                 btn.disabled = false;
-                btn.textContent = 'Crear cuenta';
-                if (error) {
-                    let m = error.message;
-                    if (m.includes('already registered') || m.includes('User already registered')) m =
+                btn.textContent = 'Crear cuenta'; if (error) { let m = error.message; if (m.includes(
+                            'already registered') || m.includes('User already registered')) m =
                         'Este correo ya está registrado';
                     err.textContent = '⚠ ' + m;
                     err.style.display = 'block';
                     setCid('disgust');
                     showBubble('Ese nombre ya está tomado 👊');
-                    setTimeout(() => setCid('idle'), 2000);
-                } else {
-                    const needs = data.user && !data.session;
+                    setTimeout(() => setCid('idle'), 2000); } else { const needs = data.user && !data.session;
                     ok.textContent = needs ? '✓ Revisa tu Gmail para confirmar' :
                         '✓ ¡Cuenta creada! Ya puedes iniciar sesión';
                     ok.style.display = 'block';
                     setCid('success');
                     createConfetti();
-                    showBubble(needs ? '¡Revisa tu correo! 📧' : '¡Bienvenido a las sombras! 😈');
-                    if (!needs) setTimeout(() => { switchTab('login');
-                        emailInput.value = email;
-                        setCid('idle'); }, 2500);
-                    else setTimeout(() => setCid('idle'), 3000);
-                }
-            } catch (e) { btn.classList.remove('loading');
+                    showBubble(needs ? '¡Revisa tu correo! 📧' : '¡Bienvenido a las sombras! 😈'); if (!needs)
+                        setTimeout(() => { switchTab('login');
+                            emailInput.value = email;
+                            setCid('idle'); }, 2500); else setTimeout(() => setCid('idle'), 3000); } } catch (
+                e) { btn.classList.remove('loading');
                 btn.disabled = false;
                 btn.textContent = 'Crear cuenta';
                 err.textContent = '⚠ Error de conexión';
-                err.style.display = 'block'; }
-        });
-
-        // Nombre de usuario
-        async function checkAndShowUsernameModal(user) {
-            const { data: profile } = await sb.from('profiles').select('username').eq('id', user.id).single();
-            if (!profile || !profile.username) {
-                openModal('usernameModal');
-                const input = document.getElementById('usernameInput'),
-                    hint = document.getElementById('usernameHint'),
-                    btn = document.getElementById('usernameBtn');
-                const suggested = (user.user_metadata?.full_name || user.email || '').split(' ')[0].toLowerCase().replace(
-                    /[^a-z0-9_]/g, '');
-                if (suggested) input.value = suggested;
-                let ct;
-                input.addEventListener('input', () => {
-                    const val = input.value.trim();
-                    input.className = 'u-input';
-                    btn.disabled = true;
-                    clearTimeout(ct);
-                    if (!val) { hint.textContent = 'Solo letras minúsculas, números y _';
-                        hint.className = 'modal-hint'; return; }
-                    if (!/^[a-z0-9_]{3,20}$/.test(val)) { hint.textContent = val.length < 3 ?
-                            'Mínimo 3 caracteres' : 'Solo a-z, 0-9 y _';
+                err.style.display = 'block'; } });
+        async function checkAndShowUsernameModal(user) { const { data: profile } = await sb.from('profiles').select(
+                'username').eq('id', user.id).single(); if (!profile || !profile.username) { openModal(
+                'usernameModal'); const input = document.getElementById('usernameInput'),
+                hint = document.getElementById('usernameHint'),
+                btn = document.getElementById('usernameBtn'); const suggested = (user.user_metadata?.full_name ||
+                    user.email || '').split(' ')[0].toLowerCase().replace(/[^a-z0-9_]/g, ''); if (suggested)
+                input.value = suggested;
+            let ct;
+            input.addEventListener('input', () => { const val = input.value.trim();
+                input.className = 'u-input';
+                btn.disabled = true;
+                clearTimeout(ct); if (!val) { hint.textContent = 'Solo letras minúsculas, números y _';
+                    hint.className = 'modal-hint'; return; } if (!/^[a-z0-9_]{3,20}$/.test(val)) {
+                    hint.textContent = val.length < 3 ? 'Mínimo 3 caracteres' : 'Solo a-z, 0-9 y _';
+                    hint.className = 'modal-hint err';
+                    input.className = 'u-input taken'; return; }
+                hint.textContent = 'Verificando…';
+                hint.className = 'modal-hint';
+                ct = setTimeout(async () => { const { data } = await sb.from('profiles').select('id').eq(
+                        'username', val).single(); if (data) { hint.textContent = '❌ @' + val +
+                        ' ya está en uso';
                         hint.className = 'modal-hint err';
-                        input.className = 'u-input taken'; return; }
-                    hint.textContent = 'Verificando…';
-                    hint.className = 'modal-hint';
-                    ct = setTimeout(async () => {
-                        const { data } = await sb.from('profiles').select('id').eq('username', val)
-                            .single();
-                        if (data) { hint.textContent = '❌ @' + val + ' ya está en uso';
-                            hint.className = 'modal-hint err';
-                            input.className = 'u-input taken'; } else { hint.textContent = '✓ @' +
-                                val + ' disponible';
-                            hint.className = 'modal-hint ok';
-                            input.className = 'u-input ok';
-                            btn.disabled = false; }
-                    }, 600);
-                });
-                if (input.value) input.dispatchEvent(new Event('input'));
-                btn.onclick = async () => {
-                    const username = input.value.trim().toLowerCase();
-                    btn.textContent = 'Guardando…';
-                    btn.classList.add('loading');
-                    btn.disabled = true;
-                    const displayName = user.user_metadata?.full_name || user.user_metadata?.name || username;
-                    const { error } = await sb.from('profiles').upsert({ id: user.id, username,
-                        display_name: displayName, avatar_color: '#c0001a' });
-                    btn.classList.remove('loading');
-                    if (error) { hint.textContent = '⚠ ' + error.message;
-                        hint.className = 'modal-hint err';
-                        btn.textContent = 'Confirmar identidad →';
-                        btn.disabled = false; } else { closeModal('usernameModal');
-                        setCid('success');
-                        showBubble('¡Bienvenido, @' + username + '! 😈');
-                        createConfetti();
-                        setTimeout(() => window.location.href = 'dashboard.html', 1500); }
-                };
-            } else {
-                window.location.href = 'dashboard.html';
-            }
-        }
+                        input.className = 'u-input taken'; } else { hint.textContent = '✓ @' +
+                        val + ' disponible';
+                        hint.className = 'modal-hint ok';
+                        input.className = 'u-input ok';
+                        btn.disabled = false; } }, 600); }); if (input.value) input.dispatchEvent(new Event(
+                'input'));
+            btn.onclick = async () => { const username = input.value.trim().toLowerCase();
+                btn.textContent = 'Guardando…';
+                btn.classList.add('loading');
+                btn.disabled = true; const displayName = user.user_metadata?.full_name || user.user_metadata
+                    ?.name || username; const { error } = await sb.from('profiles').upsert({ id: user.id,
+                    username, display_name: displayName, avatar_color: '#c0001a' });
+                btn.classList.remove('loading'); if (error) { hint.textContent = '⚠ ' + error.message;
+                    hint.className = 'modal-hint err';
+                    btn.textContent = 'Confirmar identidad →';
+                    btn.disabled = false; } else { closeModal('usernameModal');
+                    setCid('success');
+                    showBubble('¡Bienvenido, @' + username + '! 😈');
+                    createConfetti();
+                    setTimeout(() => window.location.href = 'dashboard.html', 1500); } }; } else { window.location
+                .href = 'dashboard.html'; } }
 
-        // Modales
         function openModal(id) { const m = document.getElementById(id);
             m.style.display = 'flex';
             setTimeout(() => m.style.opacity = '1', 10); }
@@ -1745,56 +1620,33 @@
             setTimeout(() => m.style.display = 'none', 300); }
         document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target === m)
                 closeModal(m.id); }));
-
-        // Sesión activa
-        sb.auth.getSession().then(({ data: { session } }) => {
-            if (session) {
-                setCid('success');
+        sb.auth.getSession().then(({ data: { session } }) => { if (session) { setCid('success');
                 showBubble('¡Bienvenido de vuelta! 😈');
                 createConfetti();
                 loginBtn.textContent = '✓ ¡Acceso concedido!';
                 loginBtn.classList.add('success');
                 loginBtn.style.opacity = '1';
-                setTimeout(() => checkAndShowUsernameModal(session.user), 800);
-            }
-        });
+                setTimeout(() => checkAndShowUsernameModal(session.user), 800); } });
         sb.auth.onAuthStateChange((ev, s) => { if (ev === 'SIGNED_IN' && s) history.replaceState(null, '', window.location
                 .pathname); });
-
-        // Ojos que siguen al cursor
-        const pupilL = document.getElementById('pupilL');
-        const pupilR = document.getElementById('pupilR');
-        if (pupilL && pupilR) {
-            const leftBase = { cx: 133, cy: 117 };
-            const rightBase = { cx: 171, cy: 117 };
-            const maxMove = 1.8;
-            document.addEventListener('mousemove', (e) => {
-                if (cidState === 'covering' || cidState === 'disgust') return;
-                const cx = e.clientX,
-                    cy = e.clientY;
-                const ww = window.innerWidth,
-                    wh = window.innerHeight;
-                const dx = (cx / ww - 0.5) * 2;
-                const dy = (cy / wh - 0.5) * 2;
-                const dist = Math.min(Math.sqrt(dx * dx + dy * dy), 1);
-                const factor = dist * maxMove;
-                const angle = Math.atan2(dy, dx);
+        const pupilL = document.getElementById('pupilL'),
+            pupilR = document.getElementById('pupilR'); if (pupilL && pupilR) { const leftBase = { cx: 133, cy: 115 },
+                rightBase = { cx: 171, cy: 115 },
+                maxMove = 1.8;
+            document.addEventListener('mousemove', (e) => { if (cidState === 'covering' || cidState === 'disgust')
+                    return; const cx = e.clientX,
+                    cy = e.clientY; const ww = window.innerWidth,
+                    wh = window.innerHeight; const dx = (cx / ww - 0.5) * 2; const dy = (cy / wh - 0.5) * 2; const
+                    dist = Math.min(Math.sqrt(dx * dx + dy * dy), 1); const factor = dist * maxMove; const angle =
+                    Math.atan2(dy, dx);
                 pupilL.setAttribute('cx', leftBase.cx + Math.cos(angle) * factor);
                 pupilL.setAttribute('cy', leftBase.cy + Math.sin(angle) * factor);
                 pupilR.setAttribute('cx', rightBase.cx + Math.cos(angle) * factor);
-                pupilR.setAttribute('cy', rightBase.cy + Math.sin(angle) * factor);
-            });
-        }
-
-        // Parallax
-        document.addEventListener('mousemove', (e) => {
-            if (cidState === 'idle' || cidState === 'peek') {
-                const x = (e.clientX / window.innerWidth - 0.5) * 14;
-                const y = (e.clientY / window.innerHeight - 0.5) * 8;
-                cidWrap.style.transform = `translate(${x}px, ${y}px)`;
-            }
-        });
-
+                pupilR.setAttribute('cy', rightBase.cy + Math.sin(angle) * factor); }); }
+        document.addEventListener('mousemove', (e) => { if (cidState === 'idle' || cidState === 'peek') { const x = (e
+                    .clientX / window.innerWidth - 0.5) * 14; const y = (e.clientY / window.innerHeight - 0.5) *
+                8;
+                cidWrap.style.transform = `translate(${x}px, ${y}px)`; } });
         setCid('idle');
     </script>
 </body>
